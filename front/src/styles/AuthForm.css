@@ -1,82 +1,115 @@
-/* styles/AuthForm.css */
-
-
 .auth-form h2 {
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
+    color: #303030;
+    margin-bottom: 35px;
+    font-size: 1.4rem;
     font-weight: 600;
+    text-transform: uppercase;
 }
 
 .auth-form form {
     display: flex;
     flex-direction: column; /* Coloca los elementos en una columna */
+    /* Espacio de 10 px entre cada elemento */
+    gap: 20px;
 }
 
 .auth-form input {
-    margin-bottom: 15px; /* Espacio entre los campos */
-    padding: 10px;
-    border: 1px solid #ddd; /* Borde suave */
-    border-radius: 5px; /* Bordes redondeados */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Borde translúcido */
+    border-radius: 8px; /* Bordes más redondeados */
     font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+    color: #141414;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para los inputs */
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* Efecto al enfocar en los inputs */
+.auth-form input:focus {
+    border-color: #739648; /* Color del borde al enfocar */
+    box-shadow: 0 0 10px rgba(115, 150, 72, 0.2); /* Sombra suave al enfocar */
+    outline: none; /* Elimina el outline predeterminado */
+}
+
+/* Botón del formulario */
 .auth-form button {
-    padding: 10px;
-    background-color: #6f6f6f; 
+    margin: auto;
+    width: 40%;
+    padding: 14px; /* Más espacio para mayor prominencia */
+    background: linear-gradient(135deg, #1a541c, #3e7b41); /* Gradiente moderno de verde */
     color: white;
     border: none;
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 12px; /* Bordes más redondeados */
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s; /* Transición suave */
+    font-size: 1.2rem; /* Un poco más grande */
+    font-weight: 600; /* Texto más grueso */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
 }
 
+/* Estilo al pasar el mouse sobre el botón */
 .auth-form button:hover {
-    background-color: #739648; /* Color del botón al pasar el mouse */
+    background: linear-gradient(135deg, #66bb6a, #43a047); /* Gradiente más claro al hacer hover */
+    transform: translateY(-3px) scale(1.02); /* Efecto de elevación y ligero aumento de tamaño */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más fuerte al pasar el mouse */
 }
 
-/* Responsive */
+/* Estilo para el estado activo */
+.auth-form button:active {
+    transform: translateY(0px) scale(0.98); /* Efecto de pulsación */
+    background: linear-gradient(135deg, #388e3c, #1b5e20); /* Un verde más oscuro al hacer clic */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más pequeña cuando se hace clic */
+}
+
+
+/* Diseño responsivo para dispositivos móviles */
 @media (max-width: 768px) {
     .auth-form {
-        padding: 15px;
+        padding: 20px;
+    }
+
+    .auth-form input, .auth-form button {
+        width: 100%; /* Asegura que los inputs y botones sean siempre responsivos */
     }
 }
 
 /* UsersPage */
 .users-page {
-    max-width: 400px;
-    margin: 50px auto;
+    max-width: 500px; /* Un poco más ancho */
+    margin: 60px auto;
     text-align: center; /* Centramos el texto */
 }
 
+/* Estilo del slider */
 .slider {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px; /* Espacio entre el slider y los formularios */
+    margin-bottom: 20px; /* Mayor separación entre el slider y los formularios */
 }
 
+/* Botones del slider */
 .slider-button {
-    flex: 1; /* Cada botón toma un espacio igual */
-    padding: 10px;
-    background-color: #ebebeb; /* Color de fondo del botón */
+    flex: 1; /* Cada botón ocupa espacio igual */
+    padding: 12px;
+    background-color: rgba(201, 201, 201, 0.982); /* Color de fondo más claro */
     border: none;
     cursor: pointer;
-    transition: background-color 0.5s;
-    font-size: 1.1rem;
-    box-shadow: #3333333c 0px 0px 15px; /* Sombra suave */
-    transition: background-color 0.5s ease, transform 0.1s ease;
+    font-size: 1.2rem; /* Texto un poco más grande */
+    font-weight: 500; /* Peso de fuente moderado */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; /* Sombra más moderna */
+    transition: background-color 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
+/* Efecto hover en los botones del slider */
 .slider-button:hover {
-    transform: scale(1.05) ; /* Color del botón al pasar el mouse */
+    transform: scale(1.05); /* Efecto de agrandamiento en hover */
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px; /* Mayor sombra en hover */
 }
 
+/* Botón activo */
 .slider-button.active {
-    background-color: #739648; 
-
-    color: white; /* Color del texto cuando está activo */
+    background-color: #a9a240; /* Verde cuando está activo */
+    color: white;
 }
 
 /* Esquinas redondeadas para los botones */
@@ -90,9 +123,11 @@
     border-bottom-right-radius: 20px; /* Esquina inferior derecha redondeada */
 }
 
+/* Contenedor del formulario */
 .form-container {
     padding: 20px;
-    background-color: #ffffff; /* Fondo blanco para el formulario */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(234, 234, 234, 0.798); /* Fondo translúcido */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    color: #222222; /* Color del texto blanco */
 }

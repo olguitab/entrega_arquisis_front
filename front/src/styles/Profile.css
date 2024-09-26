@@ -1,55 +1,68 @@
-/* styles/Profile.css */
+/* Profile Page Styles */
 .profile-page {
     padding: 20px;
     max-width: 600px;
     margin: auto;
-    background-color: #f9f9f9; /* Fondo más claro */
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centra el texto */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo ligeramente translúcido */
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Sombra más fuerte */
+    text-align: center;
+    backdrop-filter: blur(10px); /* Efecto de desenfoque en el fondo */
 }
 
 .profile-page h2 {
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 700; /* Negrita más pronunciada */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    color: #303030; /* Verde para darle un tono fresco */
 }
 
+/* Profile Card */
 .profile-card {
-    background-color: #ffffff; /* Fondo blanco para la tarjeta */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.2s ease; /* Efecto de transición */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra más notable */
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición más suave */
 }
 
+.profile-card:hover {
+    transform: scale(1.01); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Sombra más profunda */
+}
+
+/* Profile Items */
 .profile-item {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    justify-content: flex-start;
+    margin-bottom: 20px;
     font-size: 1.2rem;
-    color: #555;
+    color: #333; /* Color más oscuro para el texto */
 }
 
 .profile-label {
-    font-weight: 600; /* Etiqueta en negrita */
-    margin-right: 10px; /* Espacio entre etiqueta y valor */
+    font-weight: 600;
+    margin-right: 15px; /* Más espacio entre la etiqueta y el valor */
+    color: #555; /* Un gris suave para la etiqueta */
 }
 
 .profile-icon {
-    margin-right: 10px;
-    color: #4caf50; /* Cambia el color del ícono */
-    font-size: 1.5rem; /* Tamaño del ícono */
+    margin-right: 15px;
+    color: #ffcc00; /* Un color dorado para los íconos, relacionado con apuestas */
+    font-size: 1.8rem; /* Tamaño del ícono más grande */
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
     .profile-page {
         padding: 15px;
     }
 
     .profile-item {
-        font-size: 1rem; /* Ajusta el tamaño de la fuente en pantallas pequeñas */
+        font-size: 1rem;
     }
 }

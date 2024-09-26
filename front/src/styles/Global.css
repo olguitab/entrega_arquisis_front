@@ -2,16 +2,23 @@
 
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  height: 100%;
+  font-family: 'Poppins', sans-serif; /* Fuente moderna */
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0;
+  background: url('../assets/images/football-field.png') no-repeat center center fixed; /* Fondo estático */
+  background-size: cover; /* Cubre todo el fondo */
+  backdrop-filter: blur(10px); /* Desenfoque aplicado al fondo */
+  overflow-x: hidden;
 }
 
 .container {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
+  backdrop-filter: blur(10px); /* Desenfoque adicional para los contenedores */
+  border-radius: 12px;
+  min-height: 79vh;
 }
 
 /* Loading and Error Styles */
@@ -19,4 +26,25 @@ body {
   text-align: center;
   font-size: 18px;
   padding: 20px;
+  color: #e7e7e7; /* Color dorado para consistencia */
 }
+
+/* General Input Styling */
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* styles/Footer.css */
+.footer {
+  background-color: rgba(0, 0, 0, 0.133); /* Fondo oscuro y semi-translúcido */
+  color: white; /* Color de texto blanco */
+  text-align: center; /* Centrar el texto */
+  width: 100%; /* Ancho completo */
+  padding: 15px 0; /* Espaciado vertical */
+}
+
+
