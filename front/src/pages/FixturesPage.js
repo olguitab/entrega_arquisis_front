@@ -1,6 +1,7 @@
+// pages/FixturesPage.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './style.css'; // Asegúrate de importar el CSS para estilos específicos
+import { getFixtures } from '../utils/api';
+import '../styles/Fixtures.css';
 
 const FixturesPage = () => {
   const [fixtures, setFixtures] = useState([]);
@@ -8,18 +9,18 @@ const FixturesPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchFixtures = async () => {
+    const loadFixtures = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/fixtures');
-        setFixtures(response.data.data);
-        setLoading(false);
+        const fixturesData = await getFixtures();
+        setFixtures(fixturesData);
       } catch (err) {
         setError('Error fetching fixtures');
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchFixtures();
+    loadFixtures();
   }, []);
 
   if (loading) {
