@@ -2,7 +2,8 @@
 
 /* Fixtures Page Styles */
 .fixtures-page {
-    background-color: #ffffff;
+    background-color: #ffffffe9;
+    
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -73,7 +74,7 @@
 .team-logo {
     width: 50px;
     height: 50px;
-    margin-right: 10px;
+    margin: 8px;
     transition: transform 0.3s ease;
 }
 
@@ -136,12 +137,4 @@
 .bet-button:hover {
     background-color: #218838;
     transform: translateY(-2px);
-}
-
-/* Loading and Error Styles */
-.loading, .error {
-    text-align: center;
-    font-size: 1.5rem;
-    color: #515151;
-    padding: 20px;
 }
