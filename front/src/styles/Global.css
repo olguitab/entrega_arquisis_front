@@ -38,7 +38,60 @@ input, textarea {
   border-radius: 8px;
 }
 
-/* styles/Footer.css */
+.separator {
+  border: none; /* Sin borde */
+  height: 1px; /* Altura del separador */
+  background-color: #ddd; /* Color de fondo (puedes cambiarlo) */
+  margin: 20px 0; /* Espaciado vertical */
+  width: 100%; /* Ancho completo */
+  max-width: 800px; /* Ancho máximo */
+  align-self: center; /* Centra el separador */
+}
+
+.button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 15px;
+}
+
+.button:hover {
+  background-color: #2980b9;
+  transform: translateY(-3px); /* Efecto de movimiento hacia arriba */
+}
+
+.button:active {
+  background-color: #1e6f99;
+  transform: translateY(0); /* Efecto de pulsación */
+}
+
+.value {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #e6ffe6; /* Fondo verde claro */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 5px 10px; /* Espaciado interno */
+  font-size: 1rem; /* Tamaño de fuente pequeño */
+  font-weight: 500;
+  color: #48714a; /* Texto en verde */
+  margin: 10px auto; /* Espacio superior e inferior */
+  max-width: 200px; /* Ancho máximo para evitar que se expanda demasiado */
+  text-align: center; /* Centrar texto */
+}
+
+.value-icon {
+  margin-right: 5px; /* Espacio entre el ícono y el texto */
+  color: #48714a; /* Color del ícono */
+}
+
+
+/* Footer */
 .footer {
   background-color: rgba(0, 0, 0, 0.133); /* Fondo oscuro y semi-translúcido */
   color: white; /* Color de texto blanco */

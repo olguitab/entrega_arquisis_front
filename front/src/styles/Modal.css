@@ -1,0 +1,56 @@
+.modal-overlay {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  overflow-y: auto;
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 60%;
+  min-height: 50%;
+  max-height: 80%;
+  animation: fadeIn 0.4s;
+  position: relative; /* Agregar posición relativa para el botón de cerrar */
+}
+
+.modal-button {
+  
+  position: absolute; /* Asegura que el botón esté en la esquina superior derecha */
+  top: 5px; /* Espaciado desde la parte superior */
+  right: 5px; /* Espaciado desde la derecha */
+  background: none; /* Sin fondo */
+  border: none; /* Sin borde */
+  font-size: 1.5em; /* Tamaño del icono */
+  color: #888; /* Color del icono */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: color 0.3s; /* Transición suave para el color */
+}
+
+.modal-button:hover {
+  color: #ff0000; /* Cambia el color al pasar el mouse */
+}
+
+/* Efecto de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);  
+  }
+}

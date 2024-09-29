@@ -1,23 +1,15 @@
+// components/ProfilePage.js
 import React from 'react';
 import '../styles/Profile.css'; // Importa el archivo CSS para estilos
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons'; // Íconos para usuario y correo
+import { useUser } from '../context/UserContext'; // Importa el hook del contexto
 
 const ProfilePage = () => {
-  let userInfo = null;
+  const { user } = useUser(); // Obtiene el usuario del contexto
 
-  // Intenta obtener y parsear la información del usuario desde el almacenamiento local
-  try {
-    const userInfoString = localStorage.getItem('userInfo');
-    if (userInfoString) {
-      userInfo = JSON.parse(userInfoString);
-    }
-  } catch (error) {
-    console.error('Error al parsear la información del usuario:', error);
-  }
-
-  // Verifica si userInfo no es null
-  if (!userInfo) {
+  // Verifica si user no es null
+  if (!user) {
     return (
       <div className="profile-page">
         <h2>No has iniciado sesión</h2>
@@ -26,20 +18,20 @@ const ProfilePage = () => {
     );
   }
 
-  // Si userInfo existe y es válido, renderiza la información del usuario
+  // Si user existe y es válido, renderiza la información del usuario
   return (
     <div className="profile-page">
-      <h2>Perfil de Usuario</h2>
+      <h2>My Profile</h2>
       <div className="profile-card">
         <div className="profile-item">
           <FontAwesomeIcon icon={faUser} className="profile-icon" />
           <span className="profile-label">Username:</span>
-          <span>{userInfo.username}</span>
+          <span>{user.username}</span>
         </div>
         <div className="profile-item">
           <FontAwesomeIcon icon={faEnvelope} className="profile-icon" />
           <span className="profile-label">Email:</span>
-          <span>{userInfo.email}</span>
+          <span>{user.email}</span>
         </div>
         {/* Agrega más campos si necesitas */}
       </div>

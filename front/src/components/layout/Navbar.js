@@ -1,33 +1,26 @@
 // components/layout/Navbar.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useUser } from '../../context/UserContext'; // Importa el hook del contexto
 import '../../styles/Navbar.css';
-// Importa los íconos de Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons'; // Íconos de Logout y Perfil
 
 const Navbar = () => {
+  const { user, logout } = useUser(); // Obtén el estado del usuario y la función de logout del contexto
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Elimina el token del localStorage
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('userInfo');
-    
-    // Elimina el header de autorización de axios
-    delete axios.defaults.headers.common['Authorization'];
-    
-    // Redirige a la página de inicio o login
-    navigate('/users');
+    logout(); // Usa la función de logout del contexto
+    navigate('/users'); // Redirige a la página de inicio o login
   };
 
   // Verifica si el usuario está autenticado
-  const isAuthenticated = !!localStorage.getItem('userToken');
+  const isAuthenticated = !!user;
 
   return (
     <nav className="navbar">
-      <Link to="/" className="navbar-title"> {/* Añadir Link aquí para redirigir al inicio */}
+      <Link to="/" className="navbar-title">
         <h1>Football Casino</h1>
       </Link>
       <ul className="left">
@@ -37,9 +30,8 @@ const Navbar = () => {
         {isAuthenticated && (
           <li>
             <Link to="/profile" className="profile-link">
-              {/* Ícono de perfil al lado del texto */}
               <FontAwesomeIcon icon={faUser} className="profile-icon" />
-              <span>Perfil</span>
+              <span>Profile</span>
             </Link>
           </li>
         )}

@@ -21,10 +21,10 @@ function UsersPage() {
     <div className="users-page">
       <div className="slider">
         <button className={`slider-button ${isLogin ? 'active' : ''}`} onClick={() => setIsLogin(true)}>
-          Iniciar Sesión
+          Login
         </button>
         <button className={`slider-button ${!isLogin ? 'active' : ''}`} onClick={() => setIsLogin(false)}>
-          Registrarse
+          Register
         </button>
       </div>
       <div className="form-container">

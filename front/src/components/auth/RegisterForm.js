@@ -1,6 +1,6 @@
 // components/auth/RegisterForm.js
 import React, { useState } from 'react';
-import { registerUser } from '../../utils/api'; // Importa la función de registro
+import AuthService from '../../utils/AuthService'; // Importa el AuthService
 import '../../styles/AuthForm.css'; // Importa el archivo CSS para estilos
 
 function RegisterForm({ onSuccess }) {
@@ -21,7 +21,7 @@ function RegisterForm({ onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await registerUser(registerData);
+      const response = await AuthService.register(registerData);
       console.log('Registro exitoso', response.data);
       alert('Registro exitoso!');
 
@@ -34,7 +34,7 @@ function RegisterForm({ onSuccess }) {
 
   return (
     <div className="auth-form">
-      <h2>Registro</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

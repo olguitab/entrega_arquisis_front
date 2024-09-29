@@ -1,9 +1,11 @@
 // components/auth/LoginForm.js
 import React, { useState } from 'react';
-import { loginUser, setAuthHeader } from '../../utils/api'; // Importa la función de login
+import AuthService from '../../utils/AuthService'; // Importa el AuthService
+import { useUser } from '../../context/UserContext'; // Importa el hook del contexto
 import '../../styles/AuthForm.css'; // Importa el archivo CSS para estilos
 
 function LoginForm({ onLoginSuccess }) {
+  const { setUser } = useUser(); // Obtén la función setUser del contexto
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
@@ -20,15 +22,8 @@ function LoginForm({ onLoginSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser(loginData);
-      console.log('Login exitoso', response.data);
-      
-      const accessToken = response.data.accessToken;
-      localStorage.setItem('userToken', accessToken);
-      localStorage.setItem('userInfo', JSON.stringify(response.data));
-      alert('Login exitoso!');
-      
-      setAuthHeader();
+      const userData = await AuthService.login(loginData); // Usa AuthService para iniciar sesión
+      setUser(userData); // Establece el usuario en el contexto
       
       if (onLoginSuccess) onLoginSuccess();
     } catch (error) {
@@ -39,7 +34,7 @@ function LoginForm({ onLoginSuccess }) {
 
   return (
     <div className="auth-form">
-      <h2>Iniciar Sesión</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
