@@ -2,11 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { getFixtures } from '../utils/api';
 import '../styles/Fixtures.css';
+import BondDetails from '../components/bonds/BondDetails'; // Importamos el componente BondDetails
+import Modal from '../components/layout/Modal'; // Importamos el nuevo Modal
 
 const FixturesPage = () => {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedFixture, setSelectedFixture] = useState(null); // Nuevo estado para el partido seleccionado
+  const [isModalOpen, setModalOpen] = useState(false); // Estado para controlar la visibilidad del modal
 
   useEffect(() => {
     const loadFixtures = async () => {
@@ -30,6 +34,16 @@ const FixturesPage = () => {
   if (error) {
     return <div className="error">{error}</div>;
   }
+
+  const handleShowModal = (fixture) => {
+    setSelectedFixture(fixture);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedFixture(null); // Limpiar el fixture seleccionado
+  };
 
   return (
     <div className="fixtures-page">
@@ -68,11 +82,17 @@ const FixturesPage = () => {
                     </div>
                   ))}
                 </div>
-                <button className="bet-button">Place Bet</button>
+                <button className="bet-button" onClick={() => handleShowModal(fixture)}>
+                  See more
+                </button>
               </div>
             </li>
           ))}
       </ul>
+
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        {selectedFixture && <BondDetails fixture={selectedFixture} />}
+      </Modal>
     </div>
   );
 };

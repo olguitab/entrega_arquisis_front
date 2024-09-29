@@ -4,6 +4,8 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'http://localhost:3001', // Cambia esto a tu URL base
 });
+export default api;
+
 
 // Configuración para incluir el token en las cabeceras si existe
 const setAuthHeader = () => {
@@ -26,5 +28,16 @@ export const registerUser = async (registerData) => {
 export const loginUser = async (loginData) => {
   return await api.post('/users/login', loginData);
 };
+
+// Nueva función para comprar bonos
+export const purchaseBond = async (fixtureId, amount, selectedOdd) => {
+  const data = {
+    fixtureId,
+    amount,
+    selectedOdd,
+  };
+  return await api.post('/bonds/purchase', data); // Cambia '/bonds/purchase' a la ruta correcta de tu API
+};
+
 
 export { setAuthHeader }; // Exporta la función para configurar el token

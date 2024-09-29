@@ -1,0 +1,25 @@
+.bond-details {
+
+    max-width: 100%; /* Controla el ancho máximo del detalle */
+    width: 70%; /* Permite que sea responsivo */
+    text-align: center; /* Centra el texto */
+    margin: auto;
+  }
+  
+  .cancel-button {
+    background-color: #e45d5d;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.cancel-button:hover {
+    background-color: #b02d2d;
+    transform: translateY(-3px); /* Efecto de movimiento hacia arriba */
+}
+

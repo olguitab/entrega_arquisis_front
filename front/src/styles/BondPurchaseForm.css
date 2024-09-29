@@ -1,0 +1,92 @@
+/* BondPurchaseForm.css */
+
+/* Estilo para la compra */
+.purchase-form-container {
+  text-align: center; /* Center-align text */
+  padding: 20px; /* Add some padding to the container */
+}
+
+/* Estilo del input */
+.purchase-form-container input.small-input {
+  width: 30%; /* Input size */
+  height: 44px;
+  padding: 10px;
+  margin: 15px 5px; /* Ajustar margen para spacing */
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Estilo de total y ganancias */
+.purchase-form-container .total-amount {
+  margin: 15px 0; /* Spacing above and below */
+  display: flex; /* Use flexbox to align items */
+  justify-content: center; /* Center the content */
+  gap: 5px; /* Reducir el espacio entre total y ganancias */
+}
+
+/* Estilo del contenedor del input y totales */
+.input-container {
+  display: flex;
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  gap: 5px; /* Espacio entre el input y el total */
+}
+
+/* Ajustes para el total */
+.total {
+  display: flex;
+  flex-direction: column;
+  margin: 0; /* Quitar márgenes para estar más cerca */
+}
+
+/* Container for odds buttons */
+.odds-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  justify-content: center;
+  margin: 15px 0; /* Margin for separation */
+}
+
+/* Odds buttons */
+.odd-button {
+  padding: 10px 15px; /* Adjusted padding for buttons */
+  border: 2px solid transparent;
+  background-color: #f0f4f3;
+  color: #333;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Selected button */
+.odd-button.selected {
+  background-color: #e6f0ff;
+  font-weight: bold;
+}
+
+/* Hover effect */
+.odd-button:hover {
+  border-color: #8bb9ea;
+}
+
+.value-purchase {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #e6ffe6; /* Fondo verde claro */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 5px 10px; /* Espaciado interno */
+  font-size: 1rem; /* Tamaño de fuente pequeño */
+  font-weight: 500;
+  color: #48714a; /* Texto en verde */
+  margin: 10px; /* Espacio superior e inferior */
+  max-width: 200px; /* Ancho máximo para evitar que se expanda demasiado */
+  text-align: center; /* Centrar texto */
+}
+
+.value-icon {
+  margin-right: 5px; /* Espacio entre el ícono y el texto */
+  color: #48714a; /* Color del ícono */
+}
