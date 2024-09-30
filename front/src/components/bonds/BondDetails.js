@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import BondPurchaseForm from './BondPurchaseForm';
+import { useUser } from '../../context/UserContext';  // Importa el hook useUser
 import '../../styles/BondDetails.css';
+import { useNavigate } from 'react-router-dom';  // Necesario para redirigir al login
 
 const BondDetails = ({ fixture }) => {
   const [isPurchaseFormVisible, setPurchaseFormVisible] = useState(false);
+  const { user } = useUser();  // Usa el hook useUser para acceder al usuario
+  const navigate = useNavigate();  // Hook para redirigir al login
 
   const togglePurchaseForm = () => {
     setPurchaseFormVisible(!isPurchaseFormVisible);
@@ -14,6 +18,10 @@ const BondDetails = ({ fixture }) => {
   // Nueva función para cerrar el formulario
   const handleCloseForm = () => {
     setPurchaseFormVisible(false);
+  };
+
+  const handleLoginRedirect = () => {
+    navigate('/users');  // Redirige a la página de login
   };
 
   return (
@@ -42,30 +50,46 @@ const BondDetails = ({ fixture }) => {
 
       <div className="odds">
         <h2>Odds:</h2>
-        {fixture.odds && fixture.odds[0] && fixture.odds[0].values.map((odd, index) => (
-          <div key={index} className="odd">
-            {odd.value}: {odd.odd}
-          </div>
-        ))}
+        {fixture.odds && fixture.odds[0] && fixture.odds[0].values.length > 0 ? (
+          <>
+            {fixture.odds[0].values.map((odd, index) => (
+              <div key={index} className="odd">
+                {odd.value}: {odd.odd}
+              </div>
+            ))}
+            <div className="value">
+              <FontAwesomeIcon icon={faDollarSign} className="value-icon" />
+              Bonus Value: 1.000
+            </div>
+
+            {/* Verifica si el usuario está autenticado */}
+            {user ? (
+              <>
+                <button
+                  className={`bet-button ${isPurchaseFormVisible ? 'cancel-button' : ''}`}
+                  onClick={togglePurchaseForm}
+                >
+                  {isPurchaseFormVisible ? 'Cancel' : 'Buy bonds'}
+                </button>
+                {isPurchaseFormVisible && (
+                  <div className="purchase-form-container">
+                    <BondPurchaseForm fixture={fixture} onClose={handleCloseForm} />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="login-required">
+                <p>You need to be logged in to buy bonds.</p>
+                <button className="bet-button" onClick={handleLoginRedirect}>
+                  Login
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div>No odds available</div>
+        )}
       </div>
-
-      <div className="value">
-        <FontAwesomeIcon icon={faDollarSign} className="value-icon" />
-        Bonus Value: 1.000
-      </div>
-
-      <button
-        className={`bet-button ${isPurchaseFormVisible ? 'cancel-button' : ''}`}
-        onClick={togglePurchaseForm}
-      >
-        {isPurchaseFormVisible ? 'Cancel' : 'Buy bonds'}
-      </button>
-
-      {isPurchaseFormVisible && (
-        <div className="purchase-form-container">
-          <BondPurchaseForm fixture={fixture} onClose={handleCloseForm} /> {/* Pasar onClose aquí */}
-        </div>
-      )}
     </div>
   );
 };

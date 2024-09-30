@@ -39,5 +39,21 @@ export const purchaseBond = async (fixtureId, amount, selectedOdd) => {
   return await api.post('/bonds/purchase', data); // Cambia '/bonds/purchase' a la ruta correcta de tu API
 };
 
+export const getUserBalance = async () => {
+  const response = await api.get('/wallet/balance');
+  return response.data.balance;
+};
+
+export const getTransactionHistory = async () => {
+  const response = await api.get('/wallet/transactions');
+  return response.data.transactions;
+};
+
+export const addFundsToWallet = async (amount) => {
+  const response = await api.post('/wallet/add-funds', { amount });
+  return response.data;
+};
+
+
 
 export { setAuthHeader }; // Exporta la función para configurar el token

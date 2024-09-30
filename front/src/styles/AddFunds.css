@@ -1,0 +1,110 @@
+/* AddFunds.css */
+.add-funds-container {
+  padding: 15px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+.add-funds-container h3 {
+  margin-top: 0px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.funds-input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease;
+}
+
+.quick-select {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.quick-select button {
+  padding: 10px;
+  border: 2px solid transparent;
+  background-color: #f0f4f3;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.quick-select button:hover {
+  background-color: #bfcddc;
+  border-color: #5f7690;
+}
+
+
+.payment-method {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.payment-method label {
+  font-size: 1rem;
+  margin-right: 10px;
+  font-weight: 600;
+  margin: 5px;
+
+  color: #2d2d2df3;
+}
+
+.payment-select {
+  margin-top: 5px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+}
+
+
+
+/* Botón del formulario */
+.button {
+  margin: auto;
+  width: 60%;
+  padding: 14px; /* Más espacio para mayor prominencia */
+  background: linear-gradient(135deg, #1a541c, #3e7b41); /* Gradiente moderno de verde */
+  color: white;
+  border: none;
+  border-radius: 12px; /* Bordes más redondeados */
+  cursor: pointer;
+  font-size: 1.2rem; /* Un poco más grande */
+  font-weight: 600; /* Texto más grueso */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
+
+/* Estilo al pasar el mouse sobre el botón */
+.button:hover {
+  background: linear-gradient(135deg, #66bb6a, #43a047); /* Gradiente más claro al hacer hover */
+  transform: translateY(-3px) scale(1.02); /* Efecto de elevación y ligero aumento de tamaño */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más fuerte al pasar el mouse */
+}
+
+/* Estilo para el estado activo */
+.button:active {
+  transform: translateY(0px) scale(0.98); /* Efecto de pulsación */
+  background: linear-gradient(135deg, #388e3c, #1b5e20); /* Un verde más oscuro al hacer clic */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más pequeña cuando se hace clic */
+}

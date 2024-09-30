@@ -1,0 +1,19 @@
+.transaction-history-container {
+    text-align: center;
+  }
+  
+  .transaction-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .transaction-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .close-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+  }
+  

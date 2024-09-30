@@ -1,0 +1,46 @@
+.wallet-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .add-funds-form {
+    margin: 20px 0;
+  }
+  
+  .add-funds-form input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .add-funds-form button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin-left: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .add-funds-form button:hover {
+    background-color: #45a049;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .transaction-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .transaction-list li {
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+  

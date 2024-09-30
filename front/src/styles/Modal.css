@@ -15,9 +15,9 @@
 .modal-content {
   overflow-y: auto;
   display: flex;
-  background-color: #ffffff;
+  background-color: #ffffffec;
   border-radius: 12px;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 10px;
   width: 60%;
   min-height: 50%;

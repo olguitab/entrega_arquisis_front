@@ -85,6 +85,21 @@ input, textarea {
   text-align: center; /* Centrar texto */
 }
 
+.failed-text {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #f9ecec; /* Fondo verde claro */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 5px 10px; /* Espaciado interno */
+  font-size: 1rem; /* Tamaño de fuente pequeño */
+  font-weight: 500;
+  color: #533c3c; /* Texto en verde */
+  margin: 10px auto; /* Espacio superior e inferior */
+  max-width: 200px; /* Ancho máximo para evitar que se expanda demasiado */
+  text-align: center; /* Centrar texto */
+}
+
 .value-icon {
   margin-right: 5px; /* Espacio entre el ícono y el texto */
   color: #48714a; /* Color del ícono */

@@ -1,4 +1,4 @@
-/* Profile Page Styles */
+/* Profile.css */
 .profile-page {
     padding: 20px;
     max-width: 600px;
@@ -11,7 +11,6 @@
 }
 
 .profile-page h2 {
-    color: #333;
     margin-bottom: 25px;
     font-size: 2rem;
     font-weight: 700; /* Negrita más pronunciada */
@@ -22,7 +21,7 @@
 
 /* Profile Card */
 .profile-card {
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
+    background-color: rgba(255, 255, 255, 0.517); /* Fondo translúcido */
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra más notable */
     padding: 25px;
@@ -41,13 +40,14 @@
     justify-content: flex-start;
     margin-bottom: 20px;
     font-size: 1.2rem;
-    color: #333; /* Color más oscuro para el texto */
+    color: #333;
+    gap: 10px; /* Añade espacio entre los elementos */
 }
 
 .profile-label {
     font-weight: 600;
     margin-right: 15px; /* Más espacio entre la etiqueta y el valor */
-    color: #555; /* Un gris suave para la etiqueta */
+    color: #2f2f2f; /* Un gris suave para la etiqueta */
 }
 
 .profile-icon {
@@ -66,3 +66,60 @@
         font-size: 1rem;
     }
 }
+
+.wallet-icon {
+    margin-right: 15px;
+    color: #303030; /* Un color dorado para los íconos, relacionado con apuestas */
+    font-size: 1.8rem; /* Tamaño del ícono más grande */
+}
+
+.wallet-section {
+    display: flex;
+    align-items: center; /* Alinea los elementos al centro verticalmente */
+    gap: 10px; /* Añade espacio entre los elementos */
+}
+
+.wallet-title {
+    font-size: 1.5rem;
+    color: #303030; /* Consistente con el título del perfil */
+    display: flex;
+    align-items: center; /* Centrar el ícono y el texto */
+    justify-content: flex-start;
+}
+
+.wallet-balance {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333; /* Color más oscuro para el texto */
+}
+
+/* Wallet buttons */
+.wallet-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wallet-buttons button {
+    padding: 8px 12px; /* Botones más pequeños */
+    border: 2px solid transparent;
+    background-color: #e4e4e4;
+    color: #333;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  /* Hover effect */
+  .wallet-buttons button:hover {
+    border-color: #8bb9ea;
+    background-color: #e9f1f0; /* Cambio sutil en el fondo */
+  }
+  
+  /* Active effect */
+  .wallet-buttons button:active {
+    background-color: #d6e8e5;
+    transform: translateY(1px); /* Sutil movimiento hacia abajo al hacer clic */
+  }
+  
