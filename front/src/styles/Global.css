@@ -32,10 +32,11 @@ body {
 /* General Input Styling */
 input, textarea {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 0px;
+  border-radius: 15px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.153); /* Sombra suave */
 }
 
 .separator {
@@ -99,6 +100,22 @@ input, textarea {
   max-width: 200px; /* Ancho máximo para evitar que se expanda demasiado */
   text-align: center; /* Centrar texto */
 }
+
+.failed-message {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #f9ecec; /* Fondo rojo claro */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 3px 10px; /* Espaciado interno */
+  font-size: 1rem; /* Tamaño de fuente pequeño */
+  font-weight: 500;
+  color: #6a2727; /* Texto en rojo */
+  margin: auto; /* Centrar horizontalmente */
+  text-align: center; /* Centrar texto */
+  white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+}
+
 
 .value-icon {
   margin-right: 5px; /* Espacio entre el ícono y el texto */

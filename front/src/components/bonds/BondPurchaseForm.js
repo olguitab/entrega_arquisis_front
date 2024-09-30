@@ -2,19 +2,27 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/BondPurchaseForm.css';
-import { purchaseBond } from '../../utils/api'; // Importar la función
+import Modal from '../layout/Modal';
+import { purchaseBond, addFundsToWallet, getUserBalance } from '../../utils/api'; // Importar la función
+import AddFunds from '../wallet/AddFundsForm';
+
 
 const BondPurchaseForm = ({ fixture, onClose }) => {
   const [amount, setAmount] = useState('');
   const [selectedOdd, setSelectedOdd] = useState('');
   const [error, setError] = useState('');
+  const [isAddFundsOpen, setAddFundsOpen] = useState(false);
+  const [balance, setBalance] = useState(null);
   const fixtureId = fixture.id;
+
+  // Simular balance del usuario para pruebas
+  const userBalance = 5000;
 
   const handlePurchase = async (e) => {
     e.preventDefault();
     if (!amount || !selectedOdd) {
       setError('Please enter a valid amount and select a bet type.');
-      return;
+      return ;
     }
 
     try {
@@ -26,6 +34,12 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       console.error('Error purchasing bond:', error);
       setError('There was an error processing your purchase.'); // Manejar errores
     }
+  };
+
+  const handleAddFunds = async (amount) => {
+    await addFundsToWallet(amount);
+    const updatedBalance = await getUserBalance();
+    setBalance(updatedBalance);
   };
 
   const totalAmount = amount ? amount * 1000 : 0; // Calcular el monto total
@@ -46,7 +60,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
           <p>Please select the amount of bonds</p>
 
           {/* Mensaje de error */}
-          {error && <p className="error-message">{error}</p>}
+          {error && <p className="failed-message">{error}</p>}
 
           <form onSubmit={handlePurchase}>
             <div className="input-container">
@@ -97,12 +111,26 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
               </div>
             </div>
 
-            <button type="submit" className="button">Buy</button>
+            {/* Verificar si el balance es suficiente */}
+            {totalAmount > userBalance ? (
+              <>
+                <p className="failed-message">Insufficient funds. Your balance is ${userBalance}.</p>
+
+                <button className="button" onClick={() => setAddFundsOpen(true)}>Add Funds</button>
+              </>
+            ) : (
+              <button type="submit" className="button">Buy</button>
+            )}
           </form>
         </>
       ) : (
-        <p>No odds available for this match. You cannot make a purchase at this time.</p>
+        <p className="failed-message">No odds available for this match. You cannot make a purchase at this time.</p>
       )}
+
+      {/* Modal para añadir fondos */}
+      <Modal isOpen={isAddFundsOpen} onClose={() => setAddFundsOpen(false)}>
+            <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
+        </Modal>
     </div>
   );
 };

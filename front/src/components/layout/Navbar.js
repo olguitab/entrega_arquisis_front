@@ -24,7 +24,8 @@ const Navbar = () => {
         <h1>Football Casino</h1>
       </Link>
       <ul className="left">
-        <li><Link to="/fixtures">Fixtures</Link></li>
+        <li><Link to="/fixtures">Upcoming Fixtures</Link></li>
+        <li><Link to="/past-fixtures">Past Fixtures</Link></li>
       </ul>
       <ul className="right">
         {isAuthenticated && (
