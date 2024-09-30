@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import FixturesPage from './FixturesPage';
+import FixtureDetailsPage from './FixtureDetailsPage'; // Importa el componente de detalles
 import UsersPage from './UsersPage';
-import ProfilePage from './ProfilePage'; // Asegúrate de importar el nuevo componente
+import ProfilePage from './ProfilePage';
 import './style.css';
 
 const App = () => {
@@ -26,9 +27,9 @@ const App = () => {
       <div className="container">
         <Routes>
           <Route path="/fixtures" element={<FixturesPage />} />
+          <Route path="/fixtures/:fixtureId" element={<FixtureDetailsPage />} /> {/* Ruta para detalles de un fixture específico */}
           <Route path="/users" element={<UsersPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          {/* Asegúrate de agregar la nueva ruta aquí */}
         </Routes>
       </div>
     </Router>

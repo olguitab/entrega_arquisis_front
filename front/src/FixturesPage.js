@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.css'; // Asegúrate de importar el CSS para estilos específicos
+import { useNavigate } from 'react-router-dom';
 
 const FixturesPage = () => {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFixtures = async () => {
@@ -67,7 +70,7 @@ const FixturesPage = () => {
                     </div>
                   ))}
                 </div>
-                <button className="bet-button">Place Bet</button>
+                <button className="bet-button" onClick={() => navigate(`/fixtures/${fixture.fixture.id}`)}>Place Bet</button>
               </div>
             </li>
           ))}
