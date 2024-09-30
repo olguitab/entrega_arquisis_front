@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getFixtures } from '../utils/api';
 import '../styles/Fixtures.css';
-import BondDetails from '../components/bonds/BondDetails'; 
-import Modal from '../components/layout/Modal'; 
 
-const FixturesPage = () => {
+const PastFixturesPage = () => {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedFixture, setSelectedFixture] = useState(null);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [leagueFilter, setLeagueFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
   const [destinationFilter, setDestinationFilter] = useState('');
@@ -32,16 +28,6 @@ const FixturesPage = () => {
     loadFixtures();
   }, []);
 
-  const handleShowModal = (fixture) => {
-    setSelectedFixture(fixture);
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setSelectedFixture(null);
-  };
-
   const handleLeagueChange = (event) => {
     setLeagueFilter(event.target.value);
   };
@@ -54,25 +40,23 @@ const FixturesPage = () => {
     setDestinationFilter(event.target.value);
   };
 
-  const handleOddsAvailableChange = (event) => {
-    setOddsAvailableFilter(event.target.checked);
-  };
-
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(parseInt(event.target.value));
     setCurrentPage(1); // Reset to first page
   };
 
   const filteredFixtures = fixtures
-    .filter(fixture => fixture.fixture.status.long === 'Not Started')
+    .filter(fixture => fixture.fixture.status.long !== 'Not Started')
     .filter(fixture => 
       leagueFilter === '' || 
       fixture.league.name.toLowerCase().includes(leagueFilter.toLowerCase())
     )
-    
     .filter(fixture => dateFilter === '' || new Date(fixture.fixture.date).toISOString().slice(0, 10) === dateFilter)
-    .filter(fixture => destinationFilter === '' || fixture.teams.home.name.includes(destinationFilter) || fixture.teams.away.name.includes(destinationFilter))
-    .filter(fixture => !oddsAvailableFilter || (fixture.odds && fixture.odds[0] && fixture.odds[0].values.length > 0));
+    .filter(fixture => 
+      destinationFilter === '' || 
+      fixture.league.country.toLowerCase().includes(destinationFilter.toLowerCase()) || // Filtra por país
+      fixture.teams.home.name.toLowerCase().includes(destinationFilter.toLowerCase())   // Filtra por equipo local
+    )
 
   // Pagination
   const indexOfLastFixture = currentPage * itemsPerPage;
@@ -90,7 +74,7 @@ const FixturesPage = () => {
 
   return (
     <div className="fixtures-page">
-      <h1>Upcoming Fixtures</h1>
+      <h1>Past Fixtures</h1>
 
       {/* Filtros */}
       <div className="filters">
@@ -126,21 +110,6 @@ const FixturesPage = () => {
               onChange={handleDestinationChange} 
               placeholder="Enter destination" 
             />
-          </label>
-        </div>
-
-        <div className="filter-item">
-          <label className="filter-label custom-checkbox">
-            Available Odds
-            <div className="checkbox-wrapper-3">
-              <input
-                type="checkbox"
-                id="cbx-3"
-                checked={oddsAvailableFilter}
-                onChange={handleOddsAvailableChange}
-              />
-              <label htmlFor="cbx-3" className="toggle"><span></span></label>
-            </div>
           </label>
         </div>
       </div>
@@ -197,9 +166,20 @@ const FixturesPage = () => {
                   <div className="failed-text">No odds available</div>
                 )}
               </div>
-              <button className="bet-button" onClick={() => handleShowModal(fixture)}>
-                See more
-              </button>
+              <div className="separator"></div>
+
+              <div className="result">
+                Goals:
+                <div className="scores"> 
+                  <div className="score">
+                    {fixture.goals.home}
+                  </div>
+                  - 
+                  <div className="score">
+                    {fixture.goals.away}
+                  </div>
+                </div>
+              </div>
             </div>
           </li>
         ))}
@@ -217,12 +197,8 @@ const FixturesPage = () => {
           </button>
         ))}
       </div>
-
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        {selectedFixture && <BondDetails fixture={selectedFixture} />}
-      </Modal>
     </div>
   );
 };
 
-export default FixturesPage;
+export default PastFixturesPage;

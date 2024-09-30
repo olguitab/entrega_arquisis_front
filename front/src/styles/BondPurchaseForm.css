@@ -50,9 +50,9 @@
 
 /* Odds buttons */
 .odd-button {
-  padding: 10px 15px; /* Adjusted padding for buttons */
+  padding: 5px 10px; /* Adjusted padding for buttons */
   border: 2px solid transparent;
-  background-color: #f0f4f3;
+  background-color: #eaeaea;
   color: #333;
   border-radius: 10px;
   cursor: pointer;
@@ -62,8 +62,7 @@
 
 /* Selected button */
 .odd-button.selected {
-  background-color: #e6f0ff;
-  font-weight: bold;
+  background-color: #c7d7ef;
 }
 
 /* Hover effect */
