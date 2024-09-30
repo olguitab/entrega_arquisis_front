@@ -42,30 +42,33 @@ const BondDetails = ({ fixture }) => {
 
       <div className="odds">
         <h2>Odds:</h2>
-        {fixture.odds && fixture.odds[0] && fixture.odds[0].values.map((odd, index) => (
-          <div key={index} className="odd">
-            {odd.value}: {odd.odd}
-          </div>
-        ))}
+        {fixture.odds && fixture.odds[0] && fixture.odds[0].values.length > 0 ? (
+          <>
+            {fixture.odds[0].values.map((odd, index) => (
+              <div key={index} className="odd">
+                {odd.value}: {odd.odd}
+              </div>
+            ))}
+            <div className="value">
+              <FontAwesomeIcon icon={faDollarSign} className="value-icon" />
+              Bonus Value: 1.000
+            </div>
+            <button
+              className={`bet-button ${isPurchaseFormVisible ? 'cancel-button' : ''}`}
+              onClick={togglePurchaseForm}
+            >
+              {isPurchaseFormVisible ? 'Cancel' : 'Buy bonds'}
+            </button>
+            {isPurchaseFormVisible && (
+              <div className="purchase-form-container">
+                <BondPurchaseForm fixture={fixture} onClose={handleCloseForm} /> {/* Pasar onClose aquí */}
+              </div>
+            )}
+          </>
+        ) : (
+          <div>No odds available</div>
+        )}
       </div>
-
-      <div className="value">
-        <FontAwesomeIcon icon={faDollarSign} className="value-icon" />
-        Bonus Value: 1.000
-      </div>
-
-      <button
-        className={`bet-button ${isPurchaseFormVisible ? 'cancel-button' : ''}`}
-        onClick={togglePurchaseForm}
-      >
-        {isPurchaseFormVisible ? 'Cancel' : 'Buy bonds'}
-      </button>
-
-      {isPurchaseFormVisible && (
-        <div className="purchase-form-container">
-          <BondPurchaseForm fixture={fixture} onClose={handleCloseForm} /> {/* Pasar onClose aquí */}
-        </div>
-      )}
     </div>
   );
 };
