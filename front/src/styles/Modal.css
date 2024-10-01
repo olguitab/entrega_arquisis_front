@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  transition: opacity 0.4s ease; /* Añadido para la transición de fade */
 }
 
 .modal-content {
@@ -22,12 +23,11 @@
   width: 60%;
   min-height: 50%;
   max-height: 80%;
-  animation: fadeIn 0.4s;
+  animation: fadeIn 0.4s; /* Animación de entrada */
   position: relative; /* Agregar posición relativa para el botón de cerrar */
 }
 
 .modal-button {
-  
   position: absolute; /* Asegura que el botón esté en la esquina superior derecha */
   top: 5px; /* Espaciado desde la parte superior */
   right: 5px; /* Espaciado desde la derecha */
@@ -46,6 +46,7 @@
 /* Efecto de entrada */
 @keyframes fadeIn {
   from {
+    scale: 0.1;
     opacity: 0;
     transform: translateY(-40px);
   }
@@ -53,4 +54,29 @@
     opacity: 1;
     transform: translateY(0);  
   }
+}
+
+/* Efecto de salida */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    scale: 0.1;
+    opacity: 0;
+    transform: translateY(-40px);
+    animation: opacity 0.3s ease;
+  }
+}
+
+/* Clase para el contenido en salida */
+.fade-out-content {
+  animation: fadeOut 0.5s ease; /* Usa la animación de salida */
+}
+
+/* Clase para el overlay en salida */
+.fade-out {
+  opacity: 0; /* Ocultar el modal */
+  transition: opacity 0.4s ease; /* Duración de la animación */
 }

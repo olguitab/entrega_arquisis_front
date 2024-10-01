@@ -118,7 +118,7 @@ const FixturesPage = () => {
 
   return (
     <div className="fixtures-page">
-      <h1>Upcoming Fixtures</h1>
+      <h1>Past Fixtures</h1>
 
       {/* Dropdown para los filtros */}
       <div className="filter-dropdown">
