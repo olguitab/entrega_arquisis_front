@@ -13,7 +13,7 @@ const HomePage = () => {
     <div className="home-container">
       <section className="widgets-container">
         <div className="fixtures-widget">
-          <FixturesPage limit={2} />
+          <FixturesPage limit={1} filtersAvailable={false} />
           <Link to="/fixtures" className="button-more">View All Fixtures</Link>
         </div>
 
@@ -21,7 +21,7 @@ const HomePage = () => {
           <div className="welcome-widget">
             <h1>Welcome to Futbet23</h1>
             <span className="dividor"></span>
-            <p>Your favorite place to place bets on football events!</p>
+            <p>Your favorite site to place bets on football events!</p>
           </div>
           <div className="profile-widget">
             {user ? <ProfilePage /> : null}

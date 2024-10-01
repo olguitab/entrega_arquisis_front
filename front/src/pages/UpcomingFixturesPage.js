@@ -6,7 +6,7 @@ import Modal from '../components/layout/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const FixturesPage = ({ limit = 5 }) => {
+const FixturesPage = ({ limit = 5, filtersAvailable = true }) => {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -120,7 +120,8 @@ const FixturesPage = ({ limit = 5 }) => {
     <div className="fixtures-page">
       <h1>Upcoming Fixtures</h1>
 
-      {/* Dropdown para los filtros */}
+      {/* Solo muestra el botón de filtros si filtersAvailable es true */}
+    {filtersAvailable && (
       <div className="filter-dropdown">
         <button className="filter-dropdown-button" onClick={toggleDropdown}>
           {isDropdownOpen ? 'Hide Filters' : 'Show Filters'}
@@ -130,97 +131,100 @@ const FixturesPage = ({ limit = 5 }) => {
           style={{ maxHeight: isDropdownOpen ? '1000px' : '0px' }}
         >
           <div className="filter-title">Filter By:</div>
-            <div className="filter-item">
-              <label className="filter-label">
-                <div className="filter-description">League:</div>
-                <input 
-                  type="text" 
-                  value={leagueFilter} 
-                  onChange={handleLeagueChange} 
-                  placeholder="Enter league name" 
-                />
-              </label>
-            </div>
-
-            <div className="filter-item">
-              <label className="filter-label">
-              <div className="filter-description">Date:</div>
-                <input 
-                  type="date" 
-                  value={dateFilter} 
-                  onChange={handleDateChange} 
-                />
-              </label>
-            </div>
-
-            <div className="filter-item">
-              <label className="filter-label">
-              <div className="filter-description">Destination:</div>
-                <input 
-                  type="text" 
-                  value={destinationFilter} 
-                  onChange={handleDestinationChange} 
-                  placeholder="Enter destination" 
-                />
-              </label>
-            </div>
-
-            <div className="filter-item">
-              <label className="filter-label">
-              <div className="filter-description">Local Team:</div>                
-                <input 
-                  type="text" 
-                  value={localTeamFilter} 
-                  onChange={handleLocalTeamChange} 
-                  placeholder="Enter local team name" 
-                />
-              </label>
-            </div>
-
-            <div className="filter-item">
-              <label className="filter-label">
-              <div className="filter-description">Visit Team:</div>
-                <input 
-                  type="text" 
-                  value={localVisitFilter} 
-                  onChange={handleVisitTeamChange} 
-                  placeholder="Enter visit team name" 
-                />
-              </label>
-            </div>
-
-            <div className="filter-item">
-              <label className="filter-label custom-checkbox">
-              <div className="filter-description">Available Odds</div>
-                <div className="checkbox-wrapper-3">
-                  <input
-                    type="checkbox"
-                    id="cbx-3"
-                    checked={oddsAvailableFilter}
-                    onChange={handleOddsAvailableChange}
-                  />
-                  <label htmlFor="cbx-3" className="toggle"><span></span></label>
-                </div>
-              </label>
-            </div>
-            {/* Paginación y resultados */}
-            <div className="results-info">
-              <div className="items-per-page">
-                <label className="filter-label">
-                  Items per Page:
-                  <select value={itemsPerPage} onChange={handleItemsPerPageChange} className="select">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                  </select>
-                </label>
-              </div>
-              <p>{filteredFixtures.length} results found. Showing {indexOfFirstFixture + 1}–{Math.min(indexOfLastFixture, filteredFixtures.length)} of {filteredFixtures.length}</p>
-            </div>
+          {/* Aquí se incluyen todos los filtros */}
+          <div className="filter-item">
+            <label className="filter-label">
+              <div className="filter-description">League:</div>
+              <input 
+                type="text" 
+                value={leagueFilter} 
+                onChange={handleLeagueChange} 
+                placeholder="Enter league name" 
+              />
+            </label>
           </div>
+
+          <div className="filter-item">
+            <label className="filter-label">
+              <div className="filter-description">Date:</div>
+              <input 
+                type="date" 
+                value={dateFilter} 
+                onChange={handleDateChange} 
+              />
+            </label>
+          </div>
+
+          <div className="filter-item">
+            <label className="filter-label">
+              <div className="filter-description">Destination:</div>
+              <input 
+                type="text" 
+                value={destinationFilter} 
+                onChange={handleDestinationChange} 
+                placeholder="Enter destination" 
+              />
+            </label>
+          </div>
+
+          <div className="filter-item">
+            <label className="filter-label">
+              <div className="filter-description">Local Team:</div>                
+              <input 
+                type="text" 
+                value={localTeamFilter} 
+                onChange={handleLocalTeamChange} 
+                placeholder="Enter local team name" 
+              />
+            </label>
+          </div>
+
+          <div className="filter-item">
+            <label className="filter-label">
+              <div className="filter-description">Visit Team:</div>
+              <input 
+                type="text" 
+                value={localVisitFilter} 
+                onChange={handleVisitTeamChange} 
+                placeholder="Enter visit team name" 
+              />
+            </label>
+          </div>
+
+          <div className="filter-item">
+            <label className="filter-label custom-checkbox">
+              <div className="filter-description">Available Odds</div>
+              <div className="checkbox-wrapper-3">
+                <input
+                  type="checkbox"
+                  id="cbx-3"
+                  checked={oddsAvailableFilter}
+                  onChange={handleOddsAvailableChange}
+                />
+                <label htmlFor="cbx-3" className="toggle"><span></span></label>
+              </div>
+            </label>
+          </div>
+
+          {/* Paginación y resultados */}
+          <div className="results-info">
+            <div className="items-per-page">
+              <label className="filter-label">
+                Items per Page:
+                <select value={itemsPerPage} onChange={handleItemsPerPageChange} className="select">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </select>
+              </label>
+            </div>
+            <p>{filteredFixtures.length} results found. Showing {indexOfFirstFixture + 1}–{Math.min(indexOfLastFixture, filteredFixtures.length)} of {filteredFixtures.length}</p>
+          </div>
+        </div>
       </div>
+    )}
 
       <ul>
         {currentFixtures.map((fixture) => (

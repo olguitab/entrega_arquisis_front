@@ -36,7 +36,7 @@
 .welcome-widget {
   min-width: 300px;
   max-width: 900px;
-  background: linear-gradient(135deg, #f5ef8d, #309d24); /* Fondo degradado */
+  background: linear-gradient(135deg, #f5f08dcf, #309d24d6); /* Fondo degradado */
   border-radius: 15px;
   padding: 30px 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
@@ -44,14 +44,14 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 20px; /* Más espacio debajo */
+  margin-bottom: 10px; /* Más espacio debajo */
   color: white; /* Texto en blanco */
   transition: transform 0.3s ease; /* Animación suave al hacer hover */
 }
 
 .welcome-widget h1 {
   font-size: 1.7rem; /* Tamaño de fuente más grande */
-  margin-bottom: 10px; /* Espacio adicional debajo del título */
+  margin-bottom: 5px; /* Espacio adicional debajo del título */
 }
 
 .welcome-widget p {
@@ -88,7 +88,7 @@
   padding: 10px 20px; /* Espaciado interno del botón */
   border-radius: 25px; /* Bordes redondeados */
   position: absolute; /* Posiciona el botón absolutamente */
-  top: 50px; /* Ajusta la distancia desde la parte superior del contenedor */
+  bottom: 20px; /* Ajusta la distancia desde la parte inferior del contenedor */
   left: 50%; /* Centra el botón horizontalmente */
   transform: translateX(-50%); /* Ajusta para centrar el botón */
   z-index: 1; /* Asegura que el botón esté encima de otros elementos */

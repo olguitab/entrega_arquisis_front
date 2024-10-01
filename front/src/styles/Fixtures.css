@@ -2,7 +2,7 @@
 
 /* Fixtures Page Styles */
 .fixtures-page {
-    background-color: #ffffffe9; /* Fondo semitranslúcido */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitranslúcido */
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra más profunda */
@@ -20,7 +20,7 @@
     margin-bottom: 20px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #47b384, #dbff90); /* Gradiente más vibrante */
+    background: linear-gradient(135deg, #5fbf83, #d4e371); /* Gradiente más vibrante */
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s ease-in-out infinite; /* Animación de brillo en bucle */
