@@ -21,18 +21,20 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-title">
-        <h1>Football Casino</h1>
+        <div className="logo" />
+        <div className="title-text">Futbet</div>
+        <div className="title-number">23</div>
       </Link>
       <ul className="left">
-        <li><Link to="/fixtures">Upcoming Fixtures</Link></li>
-        <li><Link to="/past-fixtures">Past Fixtures</Link></li>
+        <li><Link to="/fixtures">upcoming fixtures</Link></li>
+        <li><Link to="/past-fixtures">past fixtures</Link></li>
       </ul>
       <ul className="right">
         {isAuthenticated && (
           <li>
             <Link to="/profile" className="profile-link">
               <FontAwesomeIcon icon={faUser} className="profile-icon" />
-              <span>Profile</span>
+              <span>profile</span>
             </Link>
           </li>
         )}

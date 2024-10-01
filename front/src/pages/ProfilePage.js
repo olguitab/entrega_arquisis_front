@@ -12,7 +12,7 @@ import TransactionHistory from '../components/wallet/TransactionHistoryForm';
 import { getUserBalance, getTransactionHistory, addFundsToWallet } from '../utils/api'; // Asegúrate de tener estas funciones
 
 const ProfilePage = () => {
-  const { user } = useUser(); // Obtiene el usuario del contexto
+  const { user, loading } = useUser(); // Obtiene el usuario del contexto y el estado de carga
   const [balance, setBalance] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [isAddFundsOpen, setAddFundsOpen] = useState(false);
@@ -20,52 +20,62 @@ const ProfilePage = () => {
   const [fetchError, setFetchError] = useState(false); // Estado para manejar el error
 
   useEffect(() => {
-    // Obtener el balance del usuario al cargar la página
+    // Depuración: Verifica si se está obteniendo el usuario correctamente
+    console.log("User from context:", user);
+
     const fetchBalance = async () => {
       try {
-        if (user && user.id) {
-          const userBalance = await getUserBalance(user.id); // Pasamos el user.id
+        if (user && user._id) {
+          console.log("Fetching balance for user ID:", user._id); // Depuración del user._id
+          const userBalance = await getUserBalance(user._id); // Pasamos el user._id
           setBalance(userBalance);
         } else {
-          console.error("User ID is not available.");
+          console.error("User ID is not available or user is null.");
         }
       } catch (error) {
+        console.error("Error fetching balance:", error); // Depuración del error
         setFetchError(true); // Si hay un error, se marca como fallo
       }
     };
-  
-    fetchBalance();
-  }, [user]); // Ahora dependemos de user para asegurar que está disponible
-  
+
+    if (!loading) { // Solo intenta obtener el balance cuando no esté cargando
+      fetchBalance();
+    }
+  }, [user, loading]); // Dependencia de user y loading para evitar problemas
 
   const handleAddFunds = async (amount) => {
-    await addFundsToWallet(amount);
-    const updatedBalance = await getUserBalance(user.id);
-    setBalance(updatedBalance);
+    try {
+      await addFundsToWallet(user._id, amount); // Usar el nuevo endpoint
+      const updatedBalance = await getUserBalance(user._id);
+      setBalance(updatedBalance);
+    } catch (error) {
+      console.error("Error adding funds:", error); // Manejo de errores
+    }
   };
 
   const handleViewHistory = async () => {
     try {
-        const history = await getTransactionHistory();
-        setTransactions(history);
-        setHistoryOpen(true);
+      const history = await getTransactionHistory();
+      setTransactions(history);
+      setHistoryOpen(true);
     } catch (error) {
-        console.error("Error fetching transaction history:", error); // Solo para propósitos de depuración
-        // Aquí puedes mostrar un mensaje en la interfaz, si lo deseas
+      console.error("Error fetching transaction history:", error); // Solo para propósitos de depuración
     }
   };
 
   const historyContent = transactions.length > 0 ? (
     transactions.map((transaction, index) => (
-        <div key={index}>
-            {/* Renderiza tus transacciones aquí */}
-            <p>{transaction.description} - ${transaction.amount}</p>
-        </div>
+      <div key={index}>
+        <p>{transaction.description} - ${transaction.amount}</p>
+      </div>
     ))
   ) : (
-      <p>No transactions found or failed to fetch transactions.</p>
+    <p>No transactions found or failed to fetch transactions.</p>
   );
 
+  if (loading) {
+    return <p>Loading profile...</p>; // Mostrar algo mientras el contexto carga
+  }
 
   if (!user) {
     return (
@@ -78,54 +88,55 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page">
-        <h2>My Profile</h2>
+      <h2>My Profile</h2>
 
-        {/* Información del usuario */}
-        <div className="profile-card">
-            {/* Información del usuario aquí */}
-            <div className="profile-item">
-                <FontAwesomeIcon icon={faUser} className="profile-icon" />
-                <span className="profile-label">Username:</span>
-                <span>{user.username}</span>
-                <span>{user.id}</span>
-            </div>
-            <div className="profile-item">
-                <FontAwesomeIcon icon={faEnvelope} className="profile-icon" />
-                <span className="profile-label">Email:</span>
-                <span>{user.email}</span>
-            </div>
-            <hr className="separator" />
-
-            {/* Información del Wallet */}
-            <div className="profile-item">
-                <FontAwesomeIcon icon={faWallet} className="wallet-icon" />
-                <span className="profile-label">Wallet:</span>
-                <div className="wallet-section">
-                <div className="wallet-buttons">
-                    <button className="wallet-button" onClick={() => setAddFundsOpen(true)}>Add Funds</button>
-                    <button className="wallet-button" onClick={handleViewHistory}>View History</button>
-                </div>
-            </div>
-            </div>
-            <div className="profile-item">
-                <FontAwesomeIcon icon={faMoneyBillWave} className="wallet-icon" />
-                <span className="profile-label">Balance:</span>
-                {fetchError ? 'Failed to fetch balance' : `$${balance !== null ? balance : 'Loading...'}`}
-            </div>
-            
+      {/* Información del usuario */}
+      <div className="profile-card">
+        <div className="profile-item">
+          <FontAwesomeIcon icon={faUser} className="profile-icon" />
+          <span className="profile-label">Username:</span>
+          <span>{user.username}</span>
         </div>
+        <div className="profile-item">
+          <FontAwesomeIcon icon={faEnvelope} className="profile-icon" />
+          <span className="profile-label">Email:</span>
+          <span>{user.email}</span>
+        </div>
+        <hr className="separator" />
 
-        {/* Modal para añadir fondos */}
-        <Modal isOpen={isAddFundsOpen} onClose={() => setAddFundsOpen(false)}>
-            <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
-        </Modal>
+        {/* Información del Wallet */}
+        <div className="profile-item">
+          <FontAwesomeIcon icon={faWallet} className="wallet-icon" />
+          <span className="profile-label">Wallet:</span>
+          <div className="wallet-section">
+            <div className="wallet-buttons">
+              <button className="wallet-button" onClick={() => setAddFundsOpen(true)}>Add Funds</button>
+              <button className="wallet-button" onClick={handleViewHistory}>View History</button>
+            </div>
+          </div>
+        </div>
+        <div className="profile-item">
+          <FontAwesomeIcon icon={faMoneyBillWave} className="wallet-icon" />
+          <span className="profile-label">Balance:</span>
+          {fetchError || loading ? (
+            <span className="failed-text">Failed to fetch balance</span>
+          ) : (
+            <span className="money">${balance !== null ? balance : 'Loading...'}</span>
+          )}
+        </div>
+      </div>
 
-        {/* Modal para ver el historial de transacciones */}
-        <Modal isOpen={isHistoryOpen} onClose={() => setHistoryOpen(false)}>
-            {historyContent}
-        </Modal>
+      {/* Modal para añadir fondos */}
+      <Modal isOpen={isAddFundsOpen} onClose={() => setAddFundsOpen(false)}>
+        <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
+      </Modal>
+
+      {/* Modal para ver el historial de transacciones */}
+      <Modal isOpen={isHistoryOpen} onClose={() => setHistoryOpen(false)}>
+        {historyContent}
+      </Modal>
     </div>
-);
+  );
 };
 
 export default ProfilePage;
