@@ -2,26 +2,36 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import BondPurchaseForm from './BondPurchaseForm';
-import { useUser } from '../../context/UserContext';  // Importa el hook useUser
+import { useUser } from '../../context/UserContext'; 
+import WorldFlag from 'react-world-flags';  // Importa el componente de banderas
 import '../../styles/BondDetails.css';
-import { useNavigate } from 'react-router-dom';  // Necesario para redirigir al login
+import { useNavigate } from 'react-router-dom';  
 
 const BondDetails = ({ fixture }) => {
   const [isPurchaseFormVisible, setPurchaseFormVisible] = useState(false);
-  const { user } = useUser();  // Usa el hook useUser para acceder al usuario
-  const navigate = useNavigate();  // Hook para redirigir al login
+  const { user } = useUser();  
+  const navigate = useNavigate();  
 
   const togglePurchaseForm = () => {
     setPurchaseFormVisible(!isPurchaseFormVisible);
   };
 
-  // Nueva función para cerrar el formulario
   const handleCloseForm = () => {
     setPurchaseFormVisible(false);
   };
 
   const handleLoginRedirect = () => {
-    navigate('/users');  // Redirige a la página de login
+    navigate('/users');  
+  };
+
+  const countryCodeMap = {
+    'England': 'GB',
+    'Spain': 'ES',
+    'France': 'FR',
+    'Germany': 'DE',
+    'Italy': 'IT',
+    'Netherlands': 'NL',
+    'Portugal': 'PT',
   };
 
   return (
@@ -43,8 +53,18 @@ const BondDetails = ({ fixture }) => {
       <div className="league-info">
         League: {fixture.league.name}, Round: {fixture.league.round}
       </div>
-      <div className="status">
-        Status: {fixture.fixture.status.long}
+      <div className="country-info">
+        <div className="status">Country:</div>
+        <WorldFlag code={countryCodeMap[fixture.league.country] || 'US'} className="country-flag" /> 
+        <span className="country-name">{fixture.league.country}</span>
+      </div>
+      <div className="country-info">
+        <div className="status">
+          Status: 
+        </div>
+        <div className="country-name">
+          {fixture.fixture.status.long}
+        </div>
       </div>
       <hr className="separator" />
 
@@ -62,7 +82,6 @@ const BondDetails = ({ fixture }) => {
               Bonus Value: 1.000
             </div>
 
-            {/* Verifica si el usuario está autenticado */}
             {user ? (
               <>
                 <button
@@ -87,7 +106,7 @@ const BondDetails = ({ fixture }) => {
             )}
           </>
         ) : (
-          <div>No odds available</div>
+          <p className="failed-message">No odds available for this match. You cannot make a purchase at this time.</p>
         )}
       </div>
     </div>

@@ -7,6 +7,7 @@ const UserContext = createContext();
 // Proveedor del contexto
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Nuevo estado para gestionar la carga
 
   // Almacenar la información del usuario desde el almacenamiento local
   useEffect(() => {
@@ -14,6 +15,7 @@ export const UserProvider = ({ children }) => {
     if (userInfoString) {
       setUser(JSON.parse(userInfoString));
     }
+    setLoading(false); // Una vez que se obtiene la información, desactivar el estado de carga
   }, []);
 
   // Función de cierre de sesión
@@ -24,7 +26,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, logout, loading }}>
       {children}
     </UserContext.Provider>
   );

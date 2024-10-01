@@ -23,3 +23,32 @@
     transform: translateY(-3px); /* Efecto de movimiento hacia arriba */
 }
 
+.odd {
+  padding: 5px 10px; /* Adjusted padding for buttons */
+  border: 2px solid transparent;
+  background-color: #eaeaea;
+  color: #333;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.country-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  gap: 0px;
+}
+
+.country-flag {
+  width: 30px;
+  height: auto;
+  margin-left: 5px;
+}
+
+.country-name {
+  margin-left: 5px;
+  font-size: 1.1rem;
+}
