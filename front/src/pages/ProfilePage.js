@@ -23,19 +23,24 @@ const ProfilePage = () => {
     // Obtener el balance del usuario al cargar la página
     const fetchBalance = async () => {
       try {
-        const userBalance = await getUserBalance();
-        setBalance(userBalance);
+        if (user && user.id) {
+          const userBalance = await getUserBalance(user.id); // Pasamos el user.id
+          setBalance(userBalance);
+        } else {
+          console.error("User ID is not available.");
+        }
       } catch (error) {
         setFetchError(true); // Si hay un error, se marca como fallo
       }
     };
-
+  
     fetchBalance();
-  }, []);
+  }, [user]); // Ahora dependemos de user para asegurar que está disponible
+  
 
   const handleAddFunds = async (amount) => {
     await addFundsToWallet(amount);
-    const updatedBalance = await getUserBalance();
+    const updatedBalance = await getUserBalance(user.id);
     setBalance(updatedBalance);
   };
 
@@ -82,6 +87,7 @@ const ProfilePage = () => {
                 <FontAwesomeIcon icon={faUser} className="profile-icon" />
                 <span className="profile-label">Username:</span>
                 <span>{user.username}</span>
+                <span>{user.id}</span>
             </div>
             <div className="profile-item">
                 <FontAwesomeIcon icon={faEnvelope} className="profile-icon" />

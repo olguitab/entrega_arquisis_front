@@ -30,19 +30,17 @@ export const loginUser = async (loginData) => {
 };
 
 // Nueva función para comprar bonos
-export const purchaseBond = async (fixtureId, amount, selectedOdd) => {
-  const data = {
-    fixtureId,
-    amount,
-    selectedOdd,
-  };
-  return await api.post('/bonds/purchase', data); // Cambia '/bonds/purchase' a la ruta correcta de tu API
+export const purchaseBond = async (betDetails) => {
+  console.log('Sending request to purchase bond', betDetails, 'Rute:', '/pre-validate-bet');
+  return await api.post('/pre-validate-bet', betDetails); // Cambia '/pre-validate-bet' a la ruta correcta de tu API
 };
 
-export const getUserBalance = async () => {
-  const response = await api.get('/wallet/balance');
-  return response.data.balance;
+export const getUserBalance = async (user_id) => {
+  console.log('Sending request to get user balance', user_id);
+  const response = await api.get(`/wallet/balance/${user_id}`);
+  return response.data; 
 };
+
 
 export const getTransactionHistory = async () => {
   const response = await api.get('/wallet/transactions');

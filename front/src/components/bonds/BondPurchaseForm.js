@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/BondPurchaseForm.css';
 import Modal from '../layout/Modal';
-import { purchaseBond, addFundsToWallet, getUserBalance } from '../../utils/api'; // Importar la función
+import { purchaseBond, addFundsToWallet, getUserBalance } from '../../utils/api';
 import AddFunds from '../wallet/AddFundsForm';
-
+import { v4 as uuidv4 } from 'uuid'; // Importar uuid para generar IDs únicos
 
 const BondPurchaseForm = ({ fixture, onClose }) => {
   const [amount, setAmount] = useState('');
@@ -22,17 +22,33 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
     e.preventDefault();
     if (!amount || !selectedOdd) {
       setError('Please enter a valid amount and select a bet type.');
-      return ;
+      return;
     }
 
+    // Crear el objeto de detalles de la apuesta basado en la selección y los detalles del fixture
+    const betDetails = {
+      request_id: uuidv4(),
+      group_id: "23", // Cambia según tu lógica
+      fixture_id: parseInt(fixtureId, 10),
+      league_name: fixture.league?.name, // Usa el operador ?. para evitar errores
+      round: fixture.league?.round,
+      date: new Date(fixture.date).toLocaleString(), // Cambia según cómo obtienes el fixture
+      result: selectedOdd,
+      deposit_token: "", // Asegúrate de manejar esto según tu lógica
+      datetime: new Date().toISOString(),
+      quantity: parseInt(amount, 10), // Usa el valor de cantidad ingresado
+      seller: 0 // Cambia según tu lógica
+    };
+
     try {
-      // Realiza la solicitud a la API para comprar bonos
-      const response = await purchaseBond(fixtureId, amount, selectedOdd);
+      // Realizar la petición al backend para comprar bonos
+      const response = await purchaseBond(betDetails); // Cambia la función para usar el objeto betDetails
       console.log('Purchase successful:', response.data); // Manejar la respuesta según tus necesidades
-      onClose(); // Cierra el formulario después de la compra
+      alert('Purchase successful!'); // Usar alert para notificar al usuario
+      onClose(); // Evitar cerrar el formulario automáticamente
     } catch (error) {
       console.error('Error purchasing bond:', error);
-      setError('There was an error processing your purchase.'); // Manejar errores
+      setError('There was an error processing your purchase: ' + error.message); // Manejar errores
     }
   };
 
@@ -61,7 +77,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
           {/* Mensaje de error */}
           {error && <p className="failed-message">{error}</p>}
-
+          
           <form onSubmit={handlePurchase}>
             <div className="input-container">
               <input
@@ -72,7 +88,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
                 min="1"
                 className="small-input"
               />
-              <p className="value-purchase">
+              <div className="value-purchase">
                 <div>
                   <FontAwesomeIcon icon={faDollarSign} className="value-icon" />
                 </div>
@@ -80,7 +96,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
                   Total: ${totalAmount} <br />
                   Profits: ${estimatedWinnings.toFixed(2)}
                 </span>
-              </p>
+              </div>
             </div>
 
             {/* Selección de odds con botones */}
@@ -129,8 +145,8 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
       {/* Modal para añadir fondos */}
       <Modal isOpen={isAddFundsOpen} onClose={() => setAddFundsOpen(false)}>
-            <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
-        </Modal>
+        <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
+      </Modal>
     </div>
   );
 };
