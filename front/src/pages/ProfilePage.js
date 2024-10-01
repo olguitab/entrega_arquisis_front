@@ -1,3 +1,4 @@
+// components/pages/ProfilePage.js
 import React, { useState, useEffect } from 'react';
 import '../styles/Profile.css'; // Importa el archivo CSS para estilos
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,9 +44,13 @@ const ProfilePage = () => {
   }, [user, loading]); // Dependencia de user y loading para evitar problemas
 
   const handleAddFunds = async (amount) => {
-    await addFundsToWallet(amount);
-    const updatedBalance = await getUserBalance(user.id);
-    setBalance(updatedBalance);
+    try {
+      await addFundsToWallet(user._id, amount); // Usar el nuevo endpoint
+      const updatedBalance = await getUserBalance(user._id);
+      setBalance(updatedBalance);
+    } catch (error) {
+      console.error("Error adding funds:", error); // Manejo de errores
+    }
   };
 
   const handleViewHistory = async () => {
