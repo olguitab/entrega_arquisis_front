@@ -86,6 +86,17 @@ input, textarea {
   text-align: center; /* Centrar texto */
 }
 
+.money {
+  background-color: #e6ffe6; /* Fondo verde claro */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 5px 10px; /* Espaciado interno */
+  font-size: 1.1rem; /* Tamaño de fuente pequeño */
+  font-weight: 500;
+  color: #48714a; /* Texto en verde */
+  text-align: center; /* Centrar texto */
+}
+
+
 .failed-text {
   justify-content: center;
   display: flex;

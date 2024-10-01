@@ -47,11 +47,10 @@ export const getTransactionHistory = async () => {
   return response.data.transactions;
 };
 
-export const addFundsToWallet = async (amount) => {
-  const response = await api.post('/wallet/add-funds', { amount });
-  return response.data;
+export const addFundsToWallet = async (userId, amount) => {
+  const response = await api.post(`/wallet/add-money`, { user_id: userId, amount });
+  return response.data; // Puede que no devuelvas nada, pero puedes ajustar esto según sea necesario
 };
-
 
 
 export { setAuthHeader }; // Exporta la función para configurar el token
