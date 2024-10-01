@@ -5,43 +5,41 @@ import '../../styles/BondPurchaseForm.css';
 import Modal from '../layout/Modal';
 import { purchaseBond, addFundsToWallet, getUserBalance } from '../../utils/api';
 import AddFunds from '../wallet/AddFundsForm';
-import { useUser } from '../../context/UserContext'; // Importa el hook del contexto
-import { v4 as uuidv4 } from 'uuid'; // Importar uuid para generar IDs únicos
+import { useUser } from '../../context/UserContext';
+import { v4 as uuidv4 } from 'uuid';
 
 const BondPurchaseForm = ({ fixture, onClose }) => {
-  const { user, loading } = useUser(); // Obtiene el usuario del contexto y el estado de carga
+  const { user, loading } = useUser();
   const [amount, setAmount] = useState('');
   const [selectedOdd, setSelectedOdd] = useState('');
   const [error, setError] = useState('');
   const [isAddFundsOpen, setAddFundsOpen] = useState(false);
-  const [balance, setBalance] = useState(null); // Balance real del usuario
+  const [balance, setBalance] = useState(null);
   const [fetchError, setFetchError] = useState(false);
   const fixtureId = fixture.fixture.id;
 
-  // Obtener balance real del usuario al cargar el componente
   useEffect(() => {
-    // Depuración: Verifica si se está obteniendo el usuario correctamente
     console.log("User from context:", user);
 
     const fetchBalance = async () => {
       try {
         if (user && user._id) {
-          console.log("Fetching balance for user ID:", user._id); // Depuración del user._id
-          const userBalance = await getUserBalance(user._id); // Pasamos el user._id
+          console.log("Fetching balance for user ID:", user._id);
+          const userBalance = await getUserBalance(user._id);
           setBalance(userBalance);
         } else {
           console.error("User ID is not available or user is null.");
         }
       } catch (error) {
-        console.error("Error fetching balance:", error); // Depuración del error
-        setFetchError(true); // Si hay un error, se marca como fallo
+        console.error("Error fetching balance:", error);
+        setFetchError(true);
       }
     };
 
-    if (!loading) { // Solo intenta obtener el balance cuando no esté cargando
+    if (!loading) {
       fetchBalance();
     }
-  }, [user, loading]); // Dependencia de user y loading para evitar problemas
+  }, [user, loading]);
 
   const handlePurchase = async (e) => {
     e.preventDefault();
@@ -50,9 +48,14 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       return;
     }
 
+    if (totalAmount > balance) {
+      setError('Insufficient funds. Please add funds to your wallet.');
+      return;
+    }
+
     const betDetails = {
       request_id: uuidv4(),
-      group_id: "23", // Cambia según tu lógica
+      group_id: "23",
       fixture_id: parseInt(fixtureId),
       league_name: fixture.league?.name,
       round: fixture.league?.round,
@@ -76,9 +79,19 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   };
 
   const handleAddFunds = async (amount) => {
-    await addFundsToWallet(amount);
-    const updatedBalance = await getUserBalance();
-    setBalance(updatedBalance);
+    try {
+      await addFundsToWallet(user._id, amount);
+      const updatedBalance = await getUserBalance(user._id);
+      setBalance(updatedBalance);
+      setAddFundsOpen(false);
+    } catch (error) {
+      console.error("Error adding funds:", error);
+    }
+  };
+
+  const handleAddFundsClick = (e) => {
+    e.preventDefault(); // Previene el envío del formulario
+    setAddFundsOpen(true);
   };
 
   const totalAmount = amount ? amount * 1000 : 0; 
@@ -147,7 +160,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
             {totalAmount > balance ? (
               <>
                 <p className="failed-message">Insufficient funds. Your balance is ${balance}.</p>
-                <button className="button" onClick={() => setAddFundsOpen(true)}>Add Funds</button>
+              <button type="button" className="button" onClick={handleAddFundsClick}>Add Funds</button>
               </>
             ) : (
               <button type="submit" className="button">Buy</button>
