@@ -13,7 +13,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const [error, setError] = useState('');
   const [isAddFundsOpen, setAddFundsOpen] = useState(false);
   const [balance, setBalance] = useState(null);
-  const fixtureId = fixture.id;
+  const fixtureId = fixture.fixture.id;
 
   // Simular balance del usuario para pruebas
   const userBalance = 5000;
@@ -29,10 +29,10 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
     const betDetails = {
       request_id: uuidv4(),
       group_id: "23", // Cambia según tu lógica
-      fixture_id: parseInt(fixtureId, 10),
+      fixture_id: parseInt(fixtureId),
       league_name: fixture.league?.name, // Usa el operador ?. para evitar errores
       round: fixture.league?.round,
-      date: new Date(fixture.date).toLocaleString(), // Cambia según cómo obtienes el fixture
+      date: new Date(fixture.fixture.date).toLocaleString(), // Cambia según cómo obtienes el fixture
       result: selectedOdd,
       deposit_token: "", // Asegúrate de manejar esto según tu lógica
       datetime: new Date().toISOString(),
@@ -42,6 +42,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
     try {
       // Realizar la petición al backend para comprar bonos
+      console.log('Fixture id:', fixtureId, 'o', fixture.fixture.id); // Verifica el ID del fixture
       const response = await purchaseBond(betDetails); // Cambia la función para usar el objeto betDetails
       console.log('Purchase successful:', response.data); // Manejar la respuesta según tus necesidades
       alert('Purchase successful!'); // Usar alert para notificar al usuario

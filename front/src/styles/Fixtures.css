@@ -332,25 +332,6 @@
     margin: 0 30px auto;
   }
 
-  .filter-dropdown {
-    margin-top: 10px;
-  }
-  
-  .filter-dropdown-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .filter-dropdown-button:hover {
-    background-color: #2980b9;
-  }
-  
   .dropdown-content {
     justify-content: left;
     max-width: 100px;
@@ -429,13 +410,14 @@
     color: #ffffff;
     border: none;
     padding: 8px 15px;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
     transition: background-color 0.3s, box-shadow 0.3s;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
   }
+
   
   .filter-dropdown-button:hover {
     background-color: #5a6268; /* Efecto hover más oscuro */
@@ -443,7 +425,6 @@
   }
   
   .filter-dropdown-button:active {
-    background-color: #495057; /* Color más oscuro al hacer clic */
+    background-color: #13599f; /* Color más oscuro al hacer clic */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más suave al hacer clic */
   }
-  

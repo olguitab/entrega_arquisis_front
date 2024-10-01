@@ -6,7 +6,7 @@ import Modal from '../components/layout/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const FixturesPage = () => {
+const FixturesPage = ({ limit = 5 }) => {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ const FixturesPage = () => {
   const [localVisitFilter, setLocalVisitFilter] = useState('');
   const [oddsAvailableFilter, setOddsAvailableFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(limit);
 
   useEffect(() => {
     const loadFixtures = async () => {

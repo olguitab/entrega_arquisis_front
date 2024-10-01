@@ -1,0 +1,53 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px; /* Limita el ancho máximo */
+    margin: 0 auto; /* Centra la página */
+  }
+  
+  .home-header {
+    text-align: center;
+  }
+  
+  .widgets-container {
+    display: flex;
+    justify-content: flex-start; /* Alinea widgets al inicio */
+    gap: 20px; /* Espacio entre widgets */
+    width: 100%; /* Toma el ancho completo */
+  }
+  
+  .fixtures-widget,
+  .auth-widget {
+    min-width: 300px; /* Ancho mínimo para los widgets */
+    max-width: 700px; /* Ancho máximo para los widgets, ajusta según lo necesites */
+    padding: 15px; /* Espaciado interno */
+    background-color: #f9f9f9; /* Fondo claro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  h2 {
+    font-size: 1.5em; /* Tamaño de fuente */
+    margin-bottom: 10px; /* Margen debajo del título */
+  }
+  
+  .auth-widget {
+    display: flex;
+    flex-direction: column; /* Alinea elementos en columna */
+    align-items: center; /* Centra contenido */
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .widgets-container {
+      flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+      align-items: center; /* Centra los widgets */
+    }
+  }
+  
