@@ -7,6 +7,31 @@
     justify-content: space-between;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+.navbar-title {
+    display: flex;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    font-variant: small-caps;
+}
+
+.title-text {
+    font-weight: 600;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    color: #eede30;
+}
+
+.title-number {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    color: #4caf50; /* Cambia de color en hover */
 }
 
 .navbar h1 {
@@ -16,6 +41,7 @@
     letter-spacing: 1.5px;
     font-weight: 600;
     transition: color 0.3s ease;
+    font-variant: small-caps;
 }
 
 .navbar h1:hover {
@@ -28,6 +54,8 @@
     padding: 0;
     display: flex;
     align-items: center;
+    font-variant: small-caps;
+
 }
 
 .navbar .left {

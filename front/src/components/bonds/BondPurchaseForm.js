@@ -45,6 +45,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       console.log('Fixture id:', fixtureId, 'o', fixture.fixture.id); // Verifica el ID del fixture
       const response = await purchaseBond(betDetails); // Cambia la función para usar el objeto betDetails
       console.log('Purchase successful:', response.data); // Manejar la respuesta según tus necesidades
+      
       alert('Purchase successful!'); // Usar alert para notificar al usuario
       onClose(); // Evitar cerrar el formulario automáticamente
     } catch (error) {

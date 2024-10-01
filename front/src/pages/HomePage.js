@@ -19,9 +19,9 @@ const HomePage = () => {
 
         <div className="welcome-auth-widget">
           <div className="welcome-widget">
-            <h1>Welcome to CoolGoat Betting</h1>
+            <h1>Welcome to Futbet23</h1>
             <span className="dividor"></span>
-            <p>Your favorite place to place bets on sports events!</p>
+            <p>Your favorite place to place bets on football events!</p>
           </div>
           <div className="profile-widget">
             {user ? <ProfilePage /> : null}

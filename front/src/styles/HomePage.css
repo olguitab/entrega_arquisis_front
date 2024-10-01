@@ -83,7 +83,7 @@
 
 .button-more {
   text-decoration: none;
-  background-color: #e4c54bd0; /* Color de fondo del botón */
+  background: linear-gradient(135deg, #5fbf83, #d4e371); /* Degradado del botón */
   color: white; /* Color del texto del botón */
   padding: 10px 20px; /* Espaciado interno del botón */
   border-radius: 25px; /* Bordes redondeados */
