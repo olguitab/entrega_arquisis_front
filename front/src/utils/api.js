@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://olguitabarriga.me', // Cambia esto a tu URL base
+  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
   withCredentials: true, // Acepta credenciales (cookies, tokens, etc.)
 });
 
