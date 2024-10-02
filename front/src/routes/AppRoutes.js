@@ -7,6 +7,7 @@ import UsersPage from '../pages/UsersPage';
 import ProfilePage from '../pages/ProfilePage';
 import PastFixturesPage from '../pages/PastFixturesPage';
 import ProtectedRoute from '../components/auth/ProtectedRoute'; 
+import BetHistoryPage from '../pages/BetHistoryPage'; // Importa la página de historial de apuestas
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/bet-history" 
+        element={
+          <ProtectedRoute>
+            <BetHistoryPage/>
           </ProtectedRoute>
         } 
       />

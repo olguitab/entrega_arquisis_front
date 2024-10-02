@@ -1,0 +1,29 @@
+/* styles/BetHistory.css */
+.bet-history-page {
+    padding: 20px;
+  }
+  
+  .bet-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .bet-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bet-league, .bet-round, .bet-date, .bet-result, .bet-status {
+    margin: 5px 0;
+  }
+  
+  .bet-status.won {
+    color: green;
+  }
+  
+  .bet-status.lost {
+    color: red;
+  }
+  
