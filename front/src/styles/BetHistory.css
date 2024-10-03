@@ -28,19 +28,19 @@ ul {
 }
 
 /* Bet Item Styling */
-.bet-item {
-  background: #ffffff;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.bets {
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+
 }
 
-.bet-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+
+.bet-atribute {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Bet Details Styling */
