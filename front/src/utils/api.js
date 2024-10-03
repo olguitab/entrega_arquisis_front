@@ -20,6 +20,11 @@ export const getFixtures = async () => {
     return response.data.data;
   };
 
+export const getFixture = async (fixtureId) => {
+  const response = await api.get(`/fixtures/${fixtureId}`);
+  return response.data.data;
+}
+
 // Exporta las funciones para manejar las peticiones
 export const registerUser = async (registerData) => {
   return await api.post('/users', registerData);
@@ -54,15 +59,16 @@ export const addFundsToWallet = async (userId, amount) => {
 
 
 // POR IMPLEMENTAR
-export const getBetHistory = async () => {
+export const getBetHistory = async (userId) => {
   try {
-    const response = await api.get('/api/bets/history');
+    const response = await api.get(`/api/bet/history/${userId}`); // Usa la ruta correcta
     return response.data;
   } catch (error) {
     console.error('Error fetching bet history', error);
     throw error;
   }
 };
+
 
 
 export { setAuthHeader }; // Exporta la función para configurar el token

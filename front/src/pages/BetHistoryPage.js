@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { getBetHistory } from '../utils/api'; // Nueva función que hará la solicitud de historial
+import { getBetHistory } from '../utils/api';
+import { useUser } from '../context/UserContext';
 import '../styles/BetHistory.css';
+import api from '../utils/api';
 
 const BetHistoryPage = () => {
+  const { user, loading } = useUser();
   const [bets, setBets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingHistory, setLoadingHistory] = useState(true);
   const [error, setError] = useState(null);
+  const [fixture, setFixture] = useState(null);
 
   useEffect(() => {
     const fetchBetHistory = async () => {
+      if (!user || loading) return;
+
       try {
-        const betHistory = await getBetHistory();
+        const betHistory = await getBetHistory(user._id);
         setBets(betHistory);
       } catch (err) {
         setError('Error fetching bet history');
       } finally {
-        setLoading(false);
+        setLoadingHistory(false);
       }
     };
 
     fetchBetHistory();
-  }, []);
+  }, [user, loading]);
 
-  if (loading) {
+
+  if (loading || loadingHistory) {
     return <div className="loading">Loading...</div>;
   }
 
@@ -39,11 +46,8 @@ const BetHistoryPage = () => {
             <div className="bet-details">
               <div className="bet-league">League: {bet.league_name}</div>
               <div className="bet-round">Round: {bet.round}</div>
-              <div className="bet-date">Date: {new Date(bet.date).toLocaleString()}</div>
-              <div className="bet-result">Result: {bet.result}</div>
-              <div className={`bet-status ${bet.won ? 'won' : 'lost'}`}>
-                {bet.won ? 'Won' : 'Lost'}
-              </div>
+              <div className="bet-date">Date: {bet.date}</div>
+              <div className="bet-result">My odd: {bet.result}</div>
             </div>
           </li>
         ))}
