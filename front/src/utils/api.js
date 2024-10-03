@@ -22,6 +22,8 @@ export const getFixtures = async () => {
 
 export const getFixture = async (fixtureId) => {
   const response = await api.get(`/fixtures/${fixtureId}`);
+  console.log('Trying to get fixture with id:', fixtureId);
+  console.log('Fixture:', response.data.data);
   return response.data.data;
 }
 
