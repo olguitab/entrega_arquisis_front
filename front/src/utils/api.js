@@ -2,11 +2,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://olguitabarriga.me', // Cambia esto a tu URL base
-  withCredentials: true, // Acepta credenciales (cookies, tokens, etc.)
+  baseURL: 'http://localhost:3001', // Cambia esto a tu URL base
 });
-
 export default api;
+
 
 // Configuración para incluir el token en las cabeceras si existe
 const setAuthHeader = () => {
@@ -16,12 +15,17 @@ const setAuthHeader = () => {
   }
 };
 
-// Exporta las funciones para manejar las peticiones
 export const getFixtures = async () => {
-  const response = await api.get('/fixtures');
-  return response.data.data;
-};
+    const response = await api.get('/fixtures');
+    return response.data.data;
+  };
 
+export const getFixture = async (fixtureId) => {
+  const response = await api.get(`/fixtures/${fixtureId}`);
+  return response.data.data;
+}
+
+// Exporta las funciones para manejar las peticiones
 export const registerUser = async (registerData) => {
   return await api.post('/users', registerData);
 };
@@ -39,8 +43,9 @@ export const purchaseBond = async (betDetails) => {
 export const getUserBalance = async (user_id) => {
   console.log('Sending request to get user balance', user_id);
   const response = await api.get(`/wallet/balance/${user_id}`);
-  return response.data;
+  return response.data; 
 };
+
 
 export const getTransactionHistory = async () => {
   const response = await api.get('/wallet/transactions');
@@ -52,16 +57,18 @@ export const addFundsToWallet = async (userId, amount) => {
   return response.data; // Puede que no devuelvas nada, pero puedes ajustar esto según sea necesario
 };
 
+
 // POR IMPLEMENTAR
-export const getBetHistory = async () => {
+export const getBetHistory = async (userId) => {
   try {
-    const response = await api.get('/api/bets/history');
+    const response = await api.get(`/api/bet/history/${userId}`); // Usa la ruta correcta
     return response.data;
   } catch (error) {
     console.error('Error fetching bet history', error);
     throw error;
   }
 };
+
 
 
 export { setAuthHeader }; // Exporta la función para configurar el token

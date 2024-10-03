@@ -16,6 +16,17 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const [isAddFundsOpen, setAddFundsOpen] = useState(false);
   const [balance, setBalance] = useState(null);
   const [fetchError, setFetchError] = useState(false);
+  const [resultChoice, setResultChoice] = useState('');
+
+  useEffect(() => {
+    if (selectedOdd === 'home') {
+      setResultChoice(fixture.teams.home.name);
+    } else if (selectedOdd === 'away') {
+      setResultChoice(fixture.teams.away.name);
+    } else if (selectedOdd === 'draw') {
+      setResultChoice('---');
+    }
+  }, [selectedOdd, fixture.teams.home.name, fixture.teams.away.name]);
   const fixtureId = fixture.fixture.id;
 
   useEffect(() => {
@@ -60,11 +71,12 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       league_name: fixture.league?.name,
       round: fixture.league?.round,
       date: new Date(fixture.fixture.date).toLocaleString(),
-      result: selectedOdd,
+      result: resultChoice,
       deposit_token: "",
       datetime: new Date().toISOString(),
       quantity: parseInt(amount, 10),
-      seller: 0
+      seller: 0,
+      user_id: user._id // SOLO SE AGREGA ESTO OLGUITA
     };
 
     try {
