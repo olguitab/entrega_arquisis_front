@@ -60,7 +60,6 @@ export const addFundsToWallet = async (userId, amount) => {
 };
 
 
-// POR IMPLEMENTAR
 export const getBetHistory = async (userId) => {
   try {
     const response = await api.get(`/api/bet/history/${userId}`); // Usa la ruta correcta
@@ -68,6 +67,15 @@ export const getBetHistory = async (userId) => {
   } catch (error) {
     console.error('Error fetching bet history', error);
     throw error;
+  }
+};
+
+export const getTotalBondsAvailable = async (fixture_id) => {
+  try {
+    const response = await api.get(`/requests/total-bonus-avaliable/${fixture_id}`);
+    return response.data;
+  } catch (error) {
+    return "Error fetching total bonds available";
   }
 };
 

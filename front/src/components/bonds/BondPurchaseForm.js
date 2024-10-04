@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/BondPurchaseForm.css';
 import Modal from '../layout/Modal';
-import { purchaseBond, addFundsToWallet, getUserBalance } from '../../utils/api';
+import { purchaseBond, addFundsToWallet, getUserBalance, getTotalBondsAvailable } from '../../utils/api';
 import AddFunds from '../wallet/AddFundsForm';
 import { useUser } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,6 +17,9 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const [balance, setBalance] = useState(null);
   const [fetchError, setFetchError] = useState(false);
   const [resultChoice, setResultChoice] = useState('');
+  const [availableBonds, setAvailableBonds] = useState(0); // Nuevo estado para los bonos disponibles
+
+  const fixtureId = fixture.fixture.id;
 
   useEffect(() => {
     if (selectedOdd === 'home') {
@@ -27,19 +30,14 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       setResultChoice('---');
     }
   }, [selectedOdd, fixture.teams.home.name, fixture.teams.away.name]);
-  const fixtureId = fixture.fixture.id;
 
+  // Fetch user balance
   useEffect(() => {
-    console.log("User from context:", user);
-
     const fetchBalance = async () => {
       try {
         if (user && user._id) {
-          console.log("Fetching balance for user ID:", user._id);
           const userBalance = await getUserBalance(user._id);
           setBalance(userBalance);
-        } else {
-          console.error("User ID is not available or user is null.");
         }
       } catch (error) {
         console.error("Error fetching balance:", error);
@@ -51,6 +49,20 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       fetchBalance();
     }
   }, [user, loading]);
+
+  // Fetch available bonds
+  useEffect(() => {
+    const fetchAvailableBonds = async () => {
+      try {
+        const bondsAvailable = await getTotalBondsAvailable(fixtureId); // Obtén los bonos disponibles
+        setAvailableBonds(bondsAvailable);
+      } catch (error) {
+        console.error("Error fetching available bonds:", error);
+      }
+    };
+
+    fetchAvailableBonds();
+  }, [fixtureId]);
 
   const handlePurchase = async (e) => {
     e.preventDefault();
@@ -76,7 +88,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       datetime: new Date().toISOString(),
       quantity: parseInt(amount, 10),
       seller: 0,
-      id_usuario: user._id // SOLO SE AGREGA ESTO OLGUITA
+      id_usuario: user._id
     };
 
     try {
@@ -102,11 +114,11 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   };
 
   const handleAddFundsClick = (e) => {
-    e.preventDefault(); // Previene el envío del formulario
+    e.preventDefault();
     setAddFundsOpen(true);
   };
 
-  const totalAmount = amount ? amount * 1000 : 0; 
+  const totalAmount = amount ? amount * 1000 : 0;
   const hasOdds = fixture.odds && fixture.odds[0] && fixture.odds[0].values && fixture.odds[0].values.length >= 3;
   const estimatedWinnings = selectedOdd ? totalAmount * fixture.odds[0].values[{'home': 0, 'draw': 1, 'away': 2}[selectedOdd]].odd : 0;
 
@@ -120,7 +132,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
           <p>Please select the amount of bonds</p>
 
           {error && <p className="failed-message">{error}</p>}
-          
+
           <form onSubmit={handlePurchase}>
             <div className="input-container">
               <input
@@ -169,10 +181,15 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
               </div>
             </div>
 
+            <div className='available-bonds'>
+              <p>Available bonds:</p> {/* Mostrar los bonos disponibles */}
+              <div className='value-gray'>{availableBonds}</div>
+            </div>
+
             {totalAmount > balance ? (
               <>
                 <p className="failed-message">Insufficient funds. Your balance is ${balance}.</p>
-              <button type="button" className="button" onClick={handleAddFundsClick}>Add Funds</button>
+                <button type="button" className="button" onClick={handleAddFundsClick}>Add Funds</button>
               </>
             ) : (
               <button type="submit" className="button">Buy</button>
