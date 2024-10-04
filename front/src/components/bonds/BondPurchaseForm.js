@@ -82,7 +82,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       fixture_id: parseInt(fixtureId),
       league_name: fixture.league?.name,
       round: fixture.league?.round,
-      date: new Date(fixture.fixture.date).toLocaleString(),
+      date: new Date(fixture.fixture.date),
       result: resultChoice,
       deposit_token: "",
       datetime: new Date().toISOString(),
