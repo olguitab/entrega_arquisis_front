@@ -111,7 +111,6 @@ const ProfilePage = () => {
           <div className="wallet-section">
             <div className="wallet-buttons">
               <button className="wallet-button" onClick={() => setAddFundsOpen(true)}>Add Funds</button>
-              <button className="wallet-button" onClick={handleViewHistory}>View History</button>
             </div>
           </div>
         </div>
@@ -131,10 +130,6 @@ const ProfilePage = () => {
         <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
       </Modal>
 
-      {/* Modal para ver el historial de transacciones */}
-      <Modal isOpen={isHistoryOpen} onClose={() => setHistoryOpen(false)}>
-        {historyContent}
-      </Modal>
     </div>
   );
 };
