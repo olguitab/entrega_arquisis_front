@@ -76,7 +76,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       datetime: new Date().toISOString(),
       quantity: parseInt(amount, 10),
       seller: 0,
-      user_id: user._id // SOLO SE AGREGA ESTO OLGUITA
+      id_usuario: user._id // SOLO SE AGREGA ESTO OLGUITA
     };
 
     try {
