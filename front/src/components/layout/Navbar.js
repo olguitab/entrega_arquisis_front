@@ -31,12 +31,19 @@ const Navbar = () => {
       </ul>
       <ul className="right">
         {isAuthenticated && (
-          <li>
-            <Link to="/profile" className="profile-link">
-              <FontAwesomeIcon icon={faUser} className="profile-icon" />
-              <span>profile</span>
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link to="/bet-history" className="bet-history-link">
+                <span>bet history</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile" className="profile-link">
+                <FontAwesomeIcon icon={faUser} className="profile-icon" />
+                <span>profile</span>
+              </Link>
+            </li>
+          </>
         )}
         {isAuthenticated ? (
           <li>
