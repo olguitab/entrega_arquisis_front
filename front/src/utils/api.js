@@ -73,7 +73,8 @@ export const getBetHistory = async (userId) => {
 
 export const getTotalBondsAvailable = async (fixture_id) => {
   try {
-    const response = await api.get(`/requests/total-bonus-avaliable/${fixture_id}`);
+    const response = await api.get(`/available-bonds/${fixture_id}`);
+    console.log(`Available Bonds for the fixture: ${response.data} `)
     return response.data;
   } catch (error) {
     return "Error fetching total bonds available";
