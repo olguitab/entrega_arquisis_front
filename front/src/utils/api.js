@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
+  // baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
+  baseURL: 'http://localhost:3001',
 });
 export default api;
 
@@ -38,8 +39,8 @@ export const loginUser = async (loginData) => {
 
 // Nueva función para comprar bonos
 export const purchaseBond = async (betDetails) => {
-  console.log('Sending request to purchase bond', betDetails, 'Rute:', '/pre-validate-bet');
-  return await api.post('/pre-validate-bet', betDetails); // Cambia '/pre-validate-bet' a la ruta correcta de tu API
+  console.log('Sending request to purchase bond', betDetails, 'Rute:', '/api/bet');
+  return await api.post('/api/bet', betDetails); 
 };
 
 export const getUserBalance = async (user_id) => {
@@ -72,7 +73,8 @@ export const getBetHistory = async (userId) => {
 
 export const getTotalBondsAvailable = async (fixture_id) => {
   try {
-    const response = await api.get(`/requests/total-bonus-avaliable/${fixture_id}`);
+    const response = await api.get(`/available-bonds/${fixture_id}`);
+    console.log(`Available Bonds for the fixture: ${response.data} `)
     return response.data;
   } catch (error) {
     return "Error fetching total bonds available";

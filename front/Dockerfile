@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:18
+FROM node:18-alpine
 
 # Establece el directorio de trabajo
 WORKDIR /app
