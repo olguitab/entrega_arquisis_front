@@ -88,7 +88,8 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       datetime: new Date().toISOString(),
       quantity: parseInt(amount, 10),
       seller: 0,
-      id_usuario: user._id
+      id_usuario: user._id,
+      wallet: true, // TO DO: obtener el bool dependiendo de la elección del usuario
     };
 
     try {
