@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/BondPurchaseForm.css';
 import Modal from '../layout/Modal';
-import { purchaseBond, addFundsToWallet, getUserBalance, getTotalBondsAvailable } from '../../utils/api';
+import { purchaseBond, addFundsToWallet, getUserBalance, getTotalBondsAvailable, payWithWallet } from '../../utils/api';
 import AddFunds from '../wallet/AddFundsForm';
 import { useUser } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid';
+import ConfirmPurchaseForm from '../ConfirmPurchaseForm';
 
 const BondPurchaseForm = ({ fixture, onClose }) => {
   const { user, loading } = useUser();
@@ -18,8 +19,24 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const [fetchError, setFetchError] = useState(false);
   const [resultChoice, setResultChoice] = useState('');
   const [availableBonds, setAvailableBonds] = useState(0); // Nuevo estado para los bonos disponibles
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const fixtureId = fixture.fixture.id;
+
+  const handleShowConfirmation = (e) => {
+    e.preventDefault();
+    if (!amount || !selectedOdd) {
+      setError('Please enter a valid amount and select a bet type.');
+      return;
+    }
+
+    if (totalAmount > balance) {
+      setError('Insufficient funds. Please add funds to your wallet.');
+      return;
+    }
+
+    setShowConfirmation(true); // Muestra el componente de confirmación
+  };
 
   useEffect(() => {
     if (selectedOdd === 'home') {
@@ -89,11 +106,14 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       quantity: parseInt(amount, 10),
       seller: 0,
       id_usuario: user._id,
-      wallet: true, // TO DO: obtener el bool dependiendo de la elección del usuario
+      wallet: false, // TO DO: obtener el bool dependiendo de la elección del usuario
     };
 
     try {
       const response = await purchaseBond(betDetails);
+
+      //await payWithWallet(user._id, amount * -1000);
+      
       console.log('Purchase successful:', response.data);
       alert('Purchase successful!');
       onClose();
@@ -124,6 +144,17 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const estimatedWinnings = selectedOdd ? totalAmount * fixture.odds[0].values[{'home': 0, 'draw': 1, 'away': 2}[selectedOdd]].odd : 0;
 
   return (
+    <>
+      {showConfirmation ? (
+        <ConfirmPurchaseForm
+          fixture={fixture}
+          amount={amount}
+          selectedOdd={selectedOdd}
+          estimatedWinnings={estimatedWinnings}
+          onConfirm={handlePurchase}
+          onCancel={() => setShowConfirmation(false)}
+        />
+      ) : (
     <div className="purchase-form-container">
       <hr className="separator" />
       <h3>Finalize Purchase</h3>
@@ -134,7 +165,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
           {error && <p className="failed-message">{error}</p>}
 
-          <form onSubmit={handlePurchase}>
+          <form onSubmit={handleShowConfirmation}>
             <div className="input-container">
               <input
                 type="number"
@@ -194,6 +225,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
               </>
             ) : (
               <button type="submit" className="button">Buy</button>
+              // en vez de Buy, redireccionar a la confirmación de compra 
             )}
           </form>
         </>
@@ -205,6 +237,8 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
         <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
       </Modal>
     </div>
+    )}
+    </>
   );
 };
 

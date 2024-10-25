@@ -8,6 +8,7 @@ import ProfilePage from '../pages/ProfilePage';
 import PastFixturesPage from '../pages/PastFixturesPage';
 import ProtectedRoute from '../components/auth/ProtectedRoute'; 
 import BetHistoryPage from '../pages/BetHistoryPage'; // Importa la página de historial de apuestas
+// <Route path="/confirmed" element={<ConfirmedBetPage />} />
 
 const AppRoutes = () => {
   return (

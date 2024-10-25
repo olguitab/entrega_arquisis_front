@@ -17,7 +17,7 @@ const setAuthHeader = () => {
 };
 
 export const getFixtures = async () => {
-    const response = await api.get('/fixtures');
+    const response = await api.get('/fixtures?count=100');
     return response.data.data;
   };
 
@@ -40,7 +40,44 @@ export const loginUser = async (loginData) => {
 // Nueva función para comprar bonos
 export const purchaseBond = async (betDetails) => {
   console.log('Sending request to purchase bond', betDetails, 'Rute:', '/api/bet');
+  console.log.apply('Starting the payment process');
+  const amount = betDetails.quantity * 1000;
+  if (betDetails.wallet){
+    const userId = betDetails.id_usuario;
+    await payWithWallet(userId, amount);
+  }
+  else{
+    const betId = betDetails.request_id
+    payWithWebpay(betId, amount);
+  };
   return await api.post('/api/bet', betDetails); 
+};
+
+export const payWithWallet = async (userId, amount) => {
+  try {
+    await api.put(`/wallet/update/${userId}`, {amount: -amount});
+    console.log('Paying with the users wallet');
+  } catch (error) {
+    console.error('Error paying with the users wallet:', error);
+    throw new Error('Error updating wallet: ' + error.message);
+  }
+};
+
+export const payWithWebpay = async (betId, amount) => {
+  try{
+    const transactionData = {
+      betId,
+      amount
+    };
+    const { url, transaction } = await api.post(`/transactions`, transactionData);
+    console.log('Paying with webpay. Creating the transaction...');
+    console.log(url);
+    console.log(transaction);
+  }
+  catch (error){
+    console.log(`Error paying with webpay: ${error}`);
+    throw new Error('Error paying with webpay: ' + error.message);
+  }
 };
 
 export const getUserBalance = async (user_id) => {
