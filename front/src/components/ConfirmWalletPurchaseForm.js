@@ -3,7 +3,7 @@ import Modal from './layout/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
-const ConfirmPurchaseForm = ({ fixture, amount, selectedOdd, estimatedWinnings, onConfirm, onClose }) => {
+const ConfirmWalletPurchaseForm = ({ fixture, amount, selectedOdd, estimatedWinnings, onConfirm, onClose }) => {
   const totalAmount = amount ? amount * 1000 : 0;
 
   return (
@@ -38,4 +38,4 @@ const ConfirmPurchaseForm = ({ fixture, amount, selectedOdd, estimatedWinnings, 
   );
 };
 
-export default ConfirmPurchaseForm;
+export default ConfirmWalletPurchaseForm;

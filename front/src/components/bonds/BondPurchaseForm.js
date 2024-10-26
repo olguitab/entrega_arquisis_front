@@ -7,7 +7,8 @@ import { purchaseBond, addFundsToWallet, getUserBalance, getTotalBondsAvailable,
 import AddFunds from '../wallet/AddFundsForm';
 import { useUser } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid';
-import ConfirmPurchaseForm from '../ConfirmPurchaseForm';
+import ConfirmWalletPurchaseForm from '../ConfirmWalletPurchaseForm';
+import ConfirmWebpayPurchaseForm from '../ConfirmWebpayPurchaseForm';
 
 const BondPurchaseForm = ({ fixture, onClose }) => {
   const { user, loading } = useUser();
@@ -20,23 +21,11 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const [resultChoice, setResultChoice] = useState('');
   const [availableBonds, setAvailableBonds] = useState(0); // Nuevo estado para los bonos disponibles
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [wallet, setWallet] = useState(false);
+  const [webpayData, setWebpayData] = useState('');
 
   const fixtureId = fixture.fixture.id;
 
-  const handleShowConfirmation = (e) => {
-    e.preventDefault();
-    if (!amount || !selectedOdd) {
-      setError('Please enter a valid amount and select a bet type.');
-      return;
-    }
-
-    if (totalAmount > balance) {
-      setError('Insufficient funds. Please add funds to your wallet.');
-      return;
-    }
-
-    setShowConfirmation(true); // Muestra el componente de confirmación
-  };
 
   useEffect(() => {
     if (selectedOdd === 'home') {
@@ -81,7 +70,9 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
     fetchAvailableBonds();
   }, [fixtureId]);
 
-  const handlePurchase = async (e) => {
+  const handleGoPay = async (e) => {
+    console.log("handleShowConfirmation")
+
     e.preventDefault();
     if (!amount || !selectedOdd) {
       setError('Please enter a valid amount and select a bet type.');
@@ -109,19 +100,62 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       wallet: false, // TO DO: obtener el bool dependiendo de la elección del usuario
     };
 
-    try {
+    try{
       const response = await purchaseBond(betDetails);
+    
+      if (!wallet){
+        setWebpayData({ url: response.url, token: response.token });
+      }
+      setShowConfirmation(true); // Muestra el componente de confirmación
+    } catch(error){
+      console.log('error:', error);
+    };
 
-      //await payWithWallet(user._id, amount * -1000);
-      
-      console.log('Purchase successful:', response.data);
-      alert('Purchase successful!');
-      onClose();
-    } catch (error) {
-      console.error('Error purchasing bond:', error);
-      setError('There was an error processing your purchase: ' + error.message);
-    }
   };
+
+  // const handlePurchase = async (e) => {
+  //   e.preventDefault();
+  //   if (!amount || !selectedOdd) {
+  //     setError('Please enter a valid amount and select a bet type.');
+  //     return;
+  //   }
+
+  //   if (totalAmount > balance) {
+  //     setError('Insufficient funds. Please add funds to your wallet.');
+  //     return;
+  //   }
+
+  //   const betDetails = {
+  //     request_id: uuidv4(),
+  //     group_id: "23",
+  //     fixture_id: parseInt(fixtureId),
+  //     league_name: fixture.league?.name,
+  //     round: fixture.league?.round,
+  //     date: new Date(fixture.fixture.date),
+  //     result: resultChoice,
+  //     deposit_token: "",
+  //     datetime: new Date().toISOString(),
+  //     quantity: parseInt(amount, 10),
+  //     seller: 0,
+  //     id_usuario: user._id,
+  //     wallet: false, // TO DO: obtener el bool dependiendo de la elección del usuario
+  //   };
+
+  //   setWallet(false);
+
+  //   try {
+  //     const response = await purchaseBond(betDetails);
+
+  //     //await payWithWallet(user._id, amount * -1000);
+      
+  //     console.log('Purchase successful:', response.data);
+  //     alert('Purchase successful!');
+  //     onClose();
+  //   } catch (error) {
+  //     console.error('Error purchasing bond:', error);
+  //     setError('There was an error processing your purchase: ' + error.message);
+  //   }
+  // };
 
   const handleAddFunds = async (amount) => {
     try {
@@ -145,16 +179,26 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
   return (
     <>
-      {showConfirmation ? (
-        <ConfirmPurchaseForm
+      {showConfirmation && wallet ? (
+        <ConfirmWalletPurchaseForm
           fixture={fixture}
           amount={amount}
           selectedOdd={selectedOdd}
           estimatedWinnings={estimatedWinnings}
-          onConfirm={handlePurchase}
+          onConfirm={() => setShowConfirmation(false)} // TO DO: revisar bien el flujo de pago con wallet
           onCancel={() => setShowConfirmation(false)}
         />
-      ) : (
+      ) : showConfirmation && !wallet  ? (
+        <ConfirmWebpayPurchaseForm
+          fixture={fixture}
+          amount={amount}
+          selectedOdd={selectedOdd}
+          estimatedWinnings={estimatedWinnings}
+          url={webpayData.url}
+          token={webpayData.token}
+          onClose={() => setShowConfirmation(false)}
+        />
+      ): (
     <div className="purchase-form-container">
       <hr className="separator" />
       <h3>Finalize Purchase</h3>
@@ -165,7 +209,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
           {error && <p className="failed-message">{error}</p>}
 
-          <form onSubmit={handleShowConfirmation}>
+          <form onSubmit={handleGoPay}>
             <div className="input-container">
               <input
                 type="number"
@@ -224,8 +268,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
                 <button type="button" className="button" onClick={handleAddFundsClick}>Add Funds</button>
               </>
             ) : (
-              <button type="submit" className="button">Buy</button>
-              // en vez de Buy, redireccionar a la confirmación de compra 
+              <button type="submit" className="button">Go Pay</button>
             )}
           </form>
         </>

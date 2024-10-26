@@ -45,12 +45,14 @@ export const purchaseBond = async (betDetails) => {
   if (betDetails.wallet){
     const userId = betDetails.id_usuario;
     await payWithWallet(userId, amount);
+    return await api.post('/api/bet', betDetails);
   }
   else{
     const betId = betDetails.request_id
-    payWithWebpay(betId, amount);
+    const response =  await payWithWebpay(betId, amount);
+    const createdBet = await api.post('/api/bet', betDetails);
+    return {url: response.url, token: response.savedTransaction.token, createdBet};
   };
-  return await api.post('/api/bet', betDetails); 
 };
 
 export const payWithWallet = async (userId, amount) => {
@@ -69,10 +71,11 @@ export const payWithWebpay = async (betId, amount) => {
       betId,
       amount
     };
-    const { url, transaction } = await api.post(`/transactions`, transactionData);
+    const response = await api.post(`/transactions`, transactionData);
     console.log('Paying with webpay. Creating the transaction...');
-    console.log(url);
-    console.log(transaction);
+    console.log(response.data);
+    console.log(response.data.savedTransaction);
+    return response.data;
   }
   catch (error){
     console.log(`Error paying with webpay: ${error}`);
