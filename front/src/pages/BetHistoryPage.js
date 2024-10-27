@@ -104,6 +104,11 @@ const BetHistoryPage = () => {
                   <div className="value-gray">{bet.result}</div>
                 </div>
                 <div className='bet-atribute'>
+                  <div className="bet-status">Bet status: &nbsp;</div>
+                  
+                  <div className="value-gray">{bet.status}</div>
+                </div>
+                <div className='bet-atribute'>
                   <div className="bet-amount">Money invested: &nbsp;</div>
                   <div className="value">${bet.quantity*1000}</div>
                 </div>
