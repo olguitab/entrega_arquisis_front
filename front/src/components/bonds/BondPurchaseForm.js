@@ -9,8 +9,11 @@ import { useUser } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid';
 import ConfirmWalletPurchaseForm from '../ConfirmWalletPurchaseForm';
 import ConfirmWebpayPurchaseForm from '../ConfirmWebpayPurchaseForm';
+import { useNavigate } from 'react-router-dom';
+
 
 const BondPurchaseForm = ({ fixture, onClose }) => {
+  const navigate = useNavigate();
   const { user, loading } = useUser();
   const [amount, setAmount] = useState('');
   const [selectedOdd, setSelectedOdd] = useState('');
@@ -72,7 +75,6 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   }, [fixtureId]);
 
   const handleGoPay = async (e) => {
-    console.log("handleShowConfirmation")
 
     e.preventDefault();
     if (!amount || !selectedOdd) {
@@ -98,7 +100,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       quantity: parseInt(amount, 10),
       seller: 0,
       id_usuario: user._id,
-      wallet: false, // TO DO: obtener el bool dependiendo de la elección del usuario
+      wallet: wallet, // TO DO: obtener el bool dependiendo de la elección del usuario
     };
 
     try{
@@ -106,7 +108,6 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
     
       if (!wallet){
         setWebpayData({ url: response.url, token: response.token});
-        console.log('id transaccion:' ,response.transactionId);
         setTransactionId(response.transactionId)
         //sessionStorage.setItem('transactionId', response.transactionId);
       }
@@ -189,7 +190,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
           amount={amount}
           selectedOdd={selectedOdd}
           estimatedWinnings={estimatedWinnings}
-          onConfirm={() => setShowConfirmation(false)} // TO DO: revisar bien el flujo de pago con wallet
+          onConfirm={() => navigate('/successful-purchase')} // TO DO: revisar bien el flujo de pago con wallet
           onCancel={() => setShowConfirmation(false)}
         />
       ) : showConfirmation && !wallet  ? (
@@ -265,6 +266,28 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
             <div className='available-bonds'>
               <p>Available bonds:</p> {/* Mostrar los bonos disponibles */}
               <div className='value-gray'>{availableBonds}</div>
+            </div>
+
+            <div className="payment-method">
+              <p>Choose your payment method:</p>
+              <label>
+                <input
+                  type="radio"
+                  value="wallet"
+                  checked={wallet === true}
+                  onChange={() => setWallet(true)}
+                />
+                Wallet
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="webpay"
+                  checked={wallet === false}
+                  onChange={() => setWallet(false)}
+                />
+                WebPay
+              </label>
             </div>
 
             {totalAmount > balance ? (

@@ -40,7 +40,7 @@ export const loginUser = async (loginData) => {
 // Nueva función para comprar bonos
 export const purchaseBond = async (betDetails) => {
   console.log('Sending request to purchase bond', betDetails, 'Rute:', '/api/bet');
-  console.log.apply('Starting the payment process');
+  console.log('Starting the payment process');
   const amount = betDetails.quantity * 1000;
   if (betDetails.wallet){
     const userId = betDetails.id_usuario;
@@ -50,6 +50,7 @@ export const purchaseBond = async (betDetails) => {
   else{
     const betId = betDetails.request_id
     const response =  await payWithWebpay(betId, amount);
+    betDetails.deposit_token = response.savedTransaction.token;
     const createdBet = await api.post('/api/bet', betDetails);
     return {url: response.url, token: response.savedTransaction.token, transactionId: response.savedTransaction._id, createdBet};
   };
@@ -73,8 +74,6 @@ export const payWithWebpay = async (betId, amount) => {
     };
     const response = await api.post(`/transactions`, transactionData);
     console.log('Paying with webpay. Creating the transaction...');
-    console.log(response.data);
-    console.log(response.data.savedTransaction);
     return response.data;
   }
   catch (error){
@@ -89,7 +88,7 @@ export const commitTransaction = async (token_ws, transactionId) => {
           token_ws,
           transactionId,
       });
-      console.log(`response from commit: ${response}`)
+      console.log(`Response from commit: ${response.data}`)
       return response.data; // Devuelve la respuesta de la API
   } catch (error) {
       throw new Error(error.response?.data?.message || 'Error al hacer commit');
