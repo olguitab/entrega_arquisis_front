@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 const ConfirmWebpayPurchaseForm = ({ fixture, amount, selectedOdd, estimatedWinnings, url, token, onClose, transactionId }) => {
-  const totalAmount = amount ? amount * 1000 : 0;
-  sessionStorage.setItem('transactionId', transactionId);
+    const totalAmount = amount ? amount * 1000 : 0;
+    sessionStorage.setItem('transactionId', transactionId);
 
     return (
         <Modal isOpen={true} onClose={onClose}>

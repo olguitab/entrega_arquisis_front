@@ -23,6 +23,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [wallet, setWallet] = useState(false);
   const [webpayData, setWebpayData] = useState('');
+  const [transactionId, setTransactionId] = useState('');
 
   const fixtureId = fixture.fixture.id;
 
@@ -106,7 +107,8 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       if (!wallet){
         setWebpayData({ url: response.url, token: response.token});
         console.log('id transaccion:' ,response.transactionId);
-        sessionStorage.setItem('transactionId', response.transactionId);
+        setTransactionId(response.transactionId)
+        //sessionStorage.setItem('transactionId', response.transactionId);
       }
       setShowConfirmation(true); // Muestra el componente de confirmación
     } catch(error){
@@ -198,6 +200,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
           estimatedWinnings={estimatedWinnings}
           url={webpayData.url}
           token={webpayData.token}
+          transactionId={transactionId}
           onClose={() => setShowConfirmation(false)}
         />
       ): (

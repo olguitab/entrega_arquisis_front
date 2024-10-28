@@ -11,6 +11,7 @@ const SuccessfulPurchasePage = () => {
     useEffect(() => {
         const tokenWs = searchParams.get('token_ws') || '';
         const transactionId = sessionStorage.getItem('transactionId'); // Asegúrate de que este ID está disponible
+        console.log("transactionId:", transactionId)
 
         const fetchTransactionStatus = async () => {
             try {
