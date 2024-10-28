@@ -104,7 +104,9 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       const response = await purchaseBond(betDetails);
     
       if (!wallet){
-        setWebpayData({ url: response.url, token: response.token });
+        setWebpayData({ url: response.url, token: response.token});
+        console.log('id transaccion:' ,response.transactionId);
+        sessionStorage.setItem('transactionId', response.transactionId);
       }
       setShowConfirmation(true); // Muestra el componente de confirmación
     } catch(error){

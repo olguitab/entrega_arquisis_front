@@ -51,7 +51,7 @@ export const purchaseBond = async (betDetails) => {
     const betId = betDetails.request_id
     const response =  await payWithWebpay(betId, amount);
     const createdBet = await api.post('/api/bet', betDetails);
-    return {url: response.url, token: response.savedTransaction.token, createdBet};
+    return {url: response.url, token: response.savedTransaction.token, transactionId: response.savedTransaction._id, createdBet};
   };
 };
 
@@ -80,6 +80,19 @@ export const payWithWebpay = async (betId, amount) => {
   catch (error){
     console.log(`Error paying with webpay: ${error}`);
     throw new Error('Error paying with webpay: ' + error.message);
+  }
+};
+
+export const commitTransaction = async (token_ws, transactionId) => {
+  try {
+      const response = await api.post(`/transactions/commit`, {
+          token_ws,
+          transactionId,
+      });
+      console.log(`response from commit: ${response}`)
+      return response.data; // Devuelve la respuesta de la API
+  } catch (error) {
+      throw new Error(error.response?.data?.message || 'Error al hacer commit');
   }
 };
 
