@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
+  // baseURL: 'http://localhost:3001',
 });
 export default api;
 
@@ -22,7 +22,11 @@ export const getFixtures = async () => {
   };
 
 export const getFixture = async (fixtureId) => {
-  const response = await api.get(`/fixtures/${fixtureId}`);
+  const response = await api.get(`/fixtures`, {
+    params: {
+      count: 100,
+    },
+  });
   console.log('Trying to get fixture with id:', fixtureId);
   console.log('Fixture:', response.data.data);
   return response.data.data;
