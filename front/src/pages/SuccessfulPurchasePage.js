@@ -24,9 +24,10 @@ const SuccessfulPurchasePage = () => {
                 setLoading(false);
             }
         };
+        console.log(wallet);
         if (tokenWs && transactionId ) {
             fetchTransactionStatus();
-        } else if (wallet === true){
+        } else if (wallet){
             setLoading(false);
         } else {
             setError("Faltan parámetros necesarios.");
@@ -52,7 +53,7 @@ const SuccessfulPurchasePage = () => {
 
     return (
     <>
-    { transactionStatus === "AUTHORIZED" || wallet ? 
+    { transactionStatus === "AUTHORIZED" ? 
         (<div className="p-8 mt-20 flex flex-col gap-3 w-1/3 mx-auto rounded-xl shadow-[0_0px_8px_#b4b4b4]">
             <h1 className="text-center">Purchase Completed</h1>
         </div>) :
