@@ -1,0 +1,48 @@
+/* Estilos generales para el contenedor de confirmación */
+.confirmation-container {
+    width: 70%; 
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco para el modal */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: flex; /* Utilizar flexbox */
+    flex-direction: column; /* Dirección de los elementos en columna */
+    align-items: center; /* Centrar horizontalmente */
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+/* Estilos para el título */
+.confirmation-container h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333; /* Color del texto del título */
+    text-align: center; /* Centrar texto del título */
+    border-bottom: 1px solid #ccc; /* Línea separadora debajo del título */
+    padding-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Detalles de la confirmación */
+.confirmation-details {
+    margin-bottom: 20px; /* Espacio debajo de los detalles */
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+/* Estilo para cada elemento de detalle */
+.confirmation-item {
+    display: flex;
+    justify-content: space-between; /* Espacio entre etiqueta y valor */
+    padding: 8px 0; /* Espaciado vertical */
+    border-bottom: 1px solid #e0e0e0; /* Línea separadora */
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+/* Para el último elemento de detalle, eliminamos la línea inferior */
+.confirmation-item:last-child {
+    border-bottom: none; /* Sin línea inferior en el último elemento */
+}
+
+/* Estilo para los iconos de valor */
+.value-icon {
+    margin-right: 4px; /* Espacio entre el icono y el número */
+}

@@ -7,8 +7,8 @@ import { purchaseBond, addFundsToWallet, getUserBalance, getTotalBondsAvailable,
 import AddFunds from '../wallet/AddFundsForm';
 import { useUser } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid';
-import ConfirmWalletPurchaseForm from '../ConfirmWalletPurchaseForm';
-import ConfirmWebpayPurchaseForm from '../ConfirmWebpayPurchaseForm';
+import ConfirmWalletPurchaseForm from './ConfirmWalletPurchaseForm';
+import ConfirmWebpayPurchaseForm from './ConfirmWebpayPurchaseForm';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -82,7 +82,7 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
       return;
     }
 
-    if (totalAmount > balance) {
+    if (totalAmount > balance && wallet) {
       setError('Insufficient funds. Please add funds to your wallet.');
       return;
     }
@@ -270,27 +270,29 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
 
             <div className="payment-method">
               <p>Choose your payment method:</p>
-              <label>
+              <div className="payment-method-options">
                 <input
                   type="radio"
+                  id="wallet"
                   value="wallet"
                   checked={wallet === true}
                   onChange={() => setWallet(true)}
                 />
-                Wallet
-              </label>
-              <label>
+                <label htmlFor="wallet">Wallet</label>
+
                 <input
                   type="radio"
+                  id="webpay"
                   value="webpay"
                   checked={wallet === false}
                   onChange={() => setWallet(false)}
                 />
-                WebPay
-              </label>
+                <label htmlFor="webpay">WebPay</label>
+              </div>
             </div>
 
-            {totalAmount > balance ? (
+
+            {totalAmount > balance && wallet ? (
               <>
                 <p className="failed-message">Insufficient funds. Your balance is ${balance}.</p>
                 <button type="button" className="button" onClick={handleAddFundsClick}>Add Funds</button>
