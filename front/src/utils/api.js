@@ -40,7 +40,59 @@ export const loginUser = async (loginData) => {
 // Nueva función para comprar bonos
 export const purchaseBond = async (betDetails) => {
   console.log('Sending request to purchase bond', betDetails, 'Rute:', '/api/bet');
-  return await api.post('/api/bet', betDetails); 
+  console.log('Starting the payment process');
+  const amount = betDetails.quantity * 1000;
+  if (betDetails.wallet){
+    const userId = betDetails.id_usuario;
+    await payWithWallet(userId, amount);
+    return await api.post('/api/bet', betDetails);
+  }
+  else{
+    const betId = betDetails.request_id
+    const response =  await payWithWebpay(betId, amount);
+    betDetails.deposit_token = response.savedTransaction.token;
+    const createdBet = await api.post('/api/bet', betDetails);
+    return {url: response.url, token: response.savedTransaction.token, transactionId: response.savedTransaction._id, createdBet};
+  };
+};
+
+export const payWithWallet = async (userId, amount) => {
+  try {
+    await api.put(`/wallet/update/${userId}`, {amount: -amount});
+    console.log('Paying with the users wallet');
+  } catch (error) {
+    console.error('Error paying with the users wallet:', error);
+    throw new Error('Error updating wallet: ' + error.message);
+  }
+};
+
+export const payWithWebpay = async (betId, amount) => {
+  try{
+    const transactionData = {
+      betId,
+      amount
+    };
+    const response = await api.post(`/transactions`, transactionData);
+    console.log('Paying with webpay. Creating the transaction...');
+    return response.data;
+  }
+  catch (error){
+    console.log(`Error paying with webpay: ${error}`);
+    throw new Error('Error paying with webpay: ' + error.message);
+  }
+};
+
+export const commitTransaction = async (token_ws, transactionId) => {
+  try {
+      const response = await api.post(`/transactions/commit`, {
+          token_ws,
+          transactionId,
+      });
+      console.log(`Response from commit: ${response.data}`)
+      return response.data; // Devuelve la respuesta de la API
+  } catch (error) {
+      throw new Error(error.response?.data?.message || 'Error al hacer commit');
+  }
 };
 
 export const getUserBalance = async (user_id) => {
