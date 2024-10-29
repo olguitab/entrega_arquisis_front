@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
+  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', 
   // baseURL: 'http://localhost:3001',
 });
 export default api;
@@ -17,16 +17,12 @@ const setAuthHeader = () => {
 };
 
 export const getFixtures = async () => {
-    const response = await api.get('/fixtures');
+    const response = await api.get('/fixtures?count=100');
     return response.data.data;
   };
 
 export const getFixture = async (fixtureId) => {
-  const response = await api.get(`/fixtures`, {
-    params: {
-      count: 100,
-    },
-  });
+  const response = await api.get(`/fixtures/${fixtureId}`);
   console.log('Trying to get fixture with id:', fixtureId);
   console.log('Fixture:', response.data.data);
   return response.data.data;
