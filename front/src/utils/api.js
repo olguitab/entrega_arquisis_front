@@ -4,6 +4,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', 
   // baseURL: 'http://localhost:3001',
+  withCredentials: true
 });
 export default api;
 
