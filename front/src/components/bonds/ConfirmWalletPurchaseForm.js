@@ -1,5 +1,6 @@
 import React from 'react';
-import Modal from './layout/Modal';
+import Modal from '../layout/Modal';
+import '../../styles/PayForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
