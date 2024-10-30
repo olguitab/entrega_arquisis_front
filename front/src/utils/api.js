@@ -134,6 +134,32 @@ export const getTotalBondsAvailable = async (fixture_id) => {
   }
 };
 
+// Nueva función para obtener recomendaciones de apuestas inicializando el job
+export const getRecommendations = async (userId) => {
+  try {
+    const response = await api.get(`/api/bet/${userId}`);
+    console.log('Initializing recommendation job for user:', userId);
+    return response.data; // Devuelve el ID del job si se logra inicializar correctamente
+  } catch (error) {
+    console.error('Error fetching recommendations:', error);
+    throw new Error('Error fetching recommendations: ' + error.message);
+  }
+};
+
+// Nueva función para obtener los resultados del job de recomendaciones
+export const getJobResults = async (jobId) => {
+  try {
+    const response = await api.get(`/api/bet/job/${jobId}`);
+    console.log('Fetching job results for job ID:', jobId);
+    console.log('Results:', response.data);
+    return response.data; // Devuelve la lista de fixtures recomendados
+  } catch (error) {
+    console.error('Error fetching job results:', error);
+    throw new Error('Error fetching job results: ' + error.message);
+  }
+};
+
+
 
 
 export { setAuthHeader }; // Exporta la función para configurar el token
