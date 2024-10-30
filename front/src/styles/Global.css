@@ -140,7 +140,20 @@ input, textarea {
   margin: auto; /* Centrar horizontalmente */
   text-align: center; /* Centrar texto */
   white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+  animation: fadeIn 0.4s ease-in-out; /* Añade la animación de entrada */
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Comienza invisible */
+    transform: translateY(-30px) scale(0.1); /* Opcional: inicia ligeramente desplazado hacia arriba */
+  }
+  to {
+    opacity: 1; /* Finaliza visible */
+    transform: translateY(0) scale(1); /* Regresa a su posición original */
+  }
+}
+
 
 
 .value-icon {

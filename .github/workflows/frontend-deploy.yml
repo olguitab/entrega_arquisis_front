@@ -1,0 +1,46 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+      # - workers-deploy
+
+permissions:
+  contents: read
+  id-token: write  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Cambia a la versión que necesites
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./front
+
+      - name: Build the project
+        run: npm run build
+        working-directory: ./front
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID0 }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY0 }}
+          aws-region: us-east-2 # Cambia a tu región
+
+      - name: Sync build to S3
+        run: |
+          aws s3 sync ./front/build s3://arquisis-front --delete
+
+      - name: Create CloudFront Invalidation
+        run: |
+          aws cloudfront create-invalidation --distribution-id E3LDZ0HX63GRPA --paths "/*"
