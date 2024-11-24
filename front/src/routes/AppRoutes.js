@@ -7,7 +7,11 @@ import UsersPage from '../pages/UsersPage';
 import ProfilePage from '../pages/ProfilePage';
 import PastFixturesPage from '../pages/PastFixturesPage';
 import ProtectedRoute from '../components/auth/ProtectedRoute'; 
-import BetHistoryPage from '../pages/BetHistoryPage'; // Importa la página de historial de apuestas
+import BetHistoryPage from '../pages/BetHistoryPage'; 
+import RecommendationsPage from '../pages/RecommendationsPage';
+// <Route path="/confirmed" element={<ConfirmedBetPage />} />
+import SuccessfulPurchasePage from '../pages/SuccessfulPurchasePage'
+
 
 const AppRoutes = () => {
   return (
@@ -16,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/fixtures" element={<FixturesPage />} />
       <Route path="/users" element={<UsersPage />} />
       <Route path="/past-fixtures" element={<PastFixturesPage />} />
+      <Route path="/successful-purchase" element={<SuccessfulPurchasePage />} />
       <Route 
         path="/profile" 
         element={
@@ -29,6 +34,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <BetHistoryPage/>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/recommendations" 
+        element={
+          <ProtectedRoute>
+            <RecommendationsPage/>
           </ProtectedRoute>
         } 
       />

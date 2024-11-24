@@ -28,6 +28,7 @@ const Navbar = () => {
       <ul className="left">
         <li><Link to="/fixtures">upcoming fixtures</Link></li>
         <li><Link to="/past-fixtures">past fixtures</Link></li>
+        <li><Link to="/recommendations">recommendations</Link></li>
       </ul>
       <ul className="right">
         {isAuthenticated && (

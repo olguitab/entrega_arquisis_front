@@ -2,8 +2,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', // Cambia esto a tu URL base
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', 
+  // baseURL: 'http://localhost:3001',
+  withCredentials: true
 });
 export default api;
 
@@ -17,7 +18,7 @@ const setAuthHeader = () => {
 };
 
 export const getFixtures = async () => {
-    const response = await api.get('/fixtures');
+    const response = await api.get('/fixtures?count=100');
     return response.data.data;
   };
 
@@ -40,7 +41,59 @@ export const loginUser = async (loginData) => {
 // Nueva función para comprar bonos
 export const purchaseBond = async (betDetails) => {
   console.log('Sending request to purchase bond', betDetails, 'Rute:', '/api/bet');
-  return await api.post('/api/bet', betDetails); 
+  console.log('Starting the payment process');
+  const amount = betDetails.quantity * 1000;
+  if (betDetails.wallet){
+    const userId = betDetails.id_usuario;
+    await payWithWallet(userId, amount);
+    return await api.post('/api/bet', betDetails);
+  }
+  else{
+    const betId = betDetails.request_id
+    const response =  await payWithWebpay(betId, amount);
+    betDetails.deposit_token = response.savedTransaction.token;
+    const createdBet = await api.post('/api/bet', betDetails);
+    return {url: response.url, token: response.savedTransaction.token, transactionId: response.savedTransaction._id, createdBet};
+  };
+};
+
+export const payWithWallet = async (userId, amount) => {
+  try {
+    await api.put(`/wallet/update/${userId}`, {amount: -amount});
+    console.log('Paying with the users wallet');
+  } catch (error) {
+    console.error('Error paying with the users wallet:', error);
+    throw new Error('Error updating wallet: ' + error.message);
+  }
+};
+
+export const payWithWebpay = async (betId, amount) => {
+  try{
+    const transactionData = {
+      betId,
+      amount
+    };
+    const response = await api.post(`/transactions`, transactionData);
+    console.log('Paying with webpay. Creating the transaction...');
+    return response.data;
+  }
+  catch (error){
+    console.log(`Error paying with webpay: ${error}`);
+    throw new Error('Error paying with webpay: ' + error.message);
+  }
+};
+
+export const commitTransaction = async (token_ws, transactionId) => {
+  try {
+      const response = await api.post(`/transactions/commit`, {
+          token_ws,
+          transactionId,
+      });
+      console.log(`Response from commit: ${response.data}`)
+      return response.data; // Devuelve la respuesta de la API
+  } catch (error) {
+      throw new Error(error.response?.data?.message || 'Error al hacer commit');
+  }
 };
 
 export const getUserBalance = async (user_id) => {
@@ -80,6 +133,32 @@ export const getTotalBondsAvailable = async (fixture_id) => {
     return "Error fetching total bonds available";
   }
 };
+
+// Nueva función para obtener recomendaciones de apuestas inicializando el job
+export const getRecommendations = async (userId) => {
+  try {
+    const response = await api.get(`/api/bet/${userId}`);
+    console.log('Initializing recommendation job for user:', userId);
+    return response.data; // Devuelve el ID del job si se logra inicializar correctamente
+  } catch (error) {
+    console.error('Error fetching recommendations:', error);
+    throw new Error('Error fetching recommendations: ' + error.message);
+  }
+};
+
+// Nueva función para obtener los resultados del job de recomendaciones
+export const getJobResults = async (jobId) => {
+  try {
+    const response = await api.get(`/api/bet/job/${jobId}`);
+    console.log('Fetching job results for job ID:', jobId);
+    console.log('Results:', response.data);
+    return response.data; // Devuelve la lista de fixtures recomendados
+  } catch (error) {
+    console.error('Error fetching job results:', error);
+    throw new Error('Error fetching job results: ' + error.message);
+  }
+};
+
 
 
 
