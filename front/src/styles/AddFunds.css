@@ -56,17 +56,19 @@
 
 .payment-method {
   margin-bottom: 20px;
-  text-align: left;
 }
+
+
 
 .payment-method label {
   font-size: 1rem;
   margin-right: 10px;
   font-weight: 600;
   margin: 5px;
-
+  cursor:default;
   color: #2d2d2df3;
 }
+
 
 .payment-select {
   margin-top: 5px;
@@ -75,5 +77,6 @@
   border-radius: 8px;
   border: 2px solid #ccc;
   font-size: 1rem;
+  cursor: pointer;
 }
 
