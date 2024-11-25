@@ -6,7 +6,7 @@ import Modal from '../components/layout/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const FixturesPage = ({ limit = 5, filtersAvailable = true }) => {
+const FixturesPage = ({ limit = 6, filtersAvailable = true }) => {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -212,11 +212,10 @@ const FixturesPage = ({ limit = 5, filtersAvailable = true }) => {
               <label className="filter-label">
                 Items per Page:
                 <select value={itemsPerPage} onChange={handleItemsPerPageChange} className="select">
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
+                  <option value="6">6</option>
+                  <option value="12">12</option>
+                  <option value="18">18</option>
+                  <option value="24">24</option>
                 </select>
               </label>
             </div>
@@ -226,48 +225,32 @@ const FixturesPage = ({ limit = 5, filtersAvailable = true }) => {
       </div>
     )}
 
-      <ul>
+      <div className="fixtures-grid">
         {currentFixtures.map((fixture) => (
-          <li key={fixture.fixture.id} className="fixture-item">
-            <div className="fixture-details">
-              <div className="team-info">
-                <div className="team home-team">
-                  <img src={fixture.teams.home.logo} alt={fixture.teams.home.name} className="team-logo" />
-                  <strong>{fixture.teams.home.name}</strong>
-                </div>
-                <div className="vs">vs</div>
-                <div className="team away-team">
-                  <img src={fixture.teams.away.logo} alt={fixture.teams.away.name} className="team-logo" />
-                  <strong>{fixture.teams.away.name}</strong>
-                </div>
-              </div>
+          <div key={fixture.fixture.id} className="fixture-card" onClick={() => handleShowModal(fixture)}>
+            <div className="fixture-card-header">
+              <img src={fixture.teams.home.logo} alt={fixture.teams.home.name} className="team-logo" />
+              <div className="vs">vs</div>
+              <img src={fixture.teams.away.logo} alt={fixture.teams.away.name} className="team-logo" />
+            </div>
+            <div className="fixture-card-body">
+              <h3 className="fixture-title">{fixture.teams.home.name} vs {fixture.teams.away.name}</h3>
               <div className="fixture-time">
                 Date: {new Date(fixture.fixture.date).toLocaleString()}
               </div>
-              <div className="league-info">
-                League: {fixture.league.name}, Round: {fixture.league.round}
-              </div>
+
               <div className="status">
                 Status: {fixture.fixture.status.long}
               </div>
-              <div className="odds">
-                {fixture.odds && fixture.odds[0] && fixture.odds[0].values.length > 0 ? (
-                  fixture.odds[0].values.map((odd, index) => (
-                    <div key={index} className="odd">
-                      {odd.value}: {odd.odd}
-                    </div>
-                  ))
-                ) : (
-                  <div className="failed-text">No odds available</div>
-                )}
-              </div>
-              <button className="bet-button" onClick={() => handleShowModal(fixture)}>
-                See more
-              </button>
+
             </div>
-          </li>
+            <div className="fixture-card-footer">
+              <button className="bet-button">See more</button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+
 
       <div className="pagination">
         {currentPage > 1 && (

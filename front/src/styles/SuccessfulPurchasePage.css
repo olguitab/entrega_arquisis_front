@@ -1,33 +1,78 @@
-/* Estilo para la página de compra exitosa */
+/* Contenedor principal */
 .successful-purchase-container {
-    padding: 40px; /* Espaciado interno */
-    margin-top: 20px; /* Espacio superior */
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Centrar horizontalmente */
-    justify-content: center; /* Centrar verticalmente */
-    width: 70%; /* Ancho del contenedor */
-    max-width: 600px; /* Ancho máximo */
-    margin: auto; /* Centrar el contenedor */
-    background-color: #f0f8ff; /* Fondo claro */
-    border-radius: 15px; /* Bordes redondeados */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-    text-align: center; /* Centrar texto */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-/* Estilo para los mensajes de transacción */
-.transaction-message {
-    font-size: 1.5rem; /* Tamaño de fuente grande */
-    font-weight: bold; /* Negrita */
-    margin: 10px 0; /* Espaciado vertical */
+/* Barra de progreso */
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: hidden;
 }
 
-/* Estilo para los mensajes de error */
+.progress-bar {
+    height: 100%;
+    background-color: #4CAF50; /* Color verde para la barra */
+    transition: width 0.1s ease-out;
+}
+
+/* Estilos de los mensajes */
+.status-message {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.success {
+    padding: 1px 0px 1px 0px;
+    border-left: 8px solid #4CAF50;
+    background-color: #e8f5e9;
+}
+
+.pending {
+    padding: 1px 0px 1px 0px;
+    border-left: 8px solid #ff9800;
+    background-color: #fff3e0;
+}
+
+.failed {
+    padding: 1px 0px 1px 0px;
+    border-left: 8px solid #d56167;
+    background-color: #ffebee;
+}
+
+.canceled {
+    padding: 1px 0px 1px 0px;
+    border-left: 8px solid #d56167;
+    background-color: #eceff1;
+}
+
+.dropped {
+    padding: 1px 0px 1px 0px;
+    border-left: 8px solid #9e9e9e;
+    background-color: #f5f5f5;
+}
+
+
+/* Estilo de mensaje de error */
 .error-message {
-    color: #ff4c4c; /* Color rojo para errores */
+    color: #d56167;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-/* Estilo para los mensajes de éxito */
-.success-message {
-    color: #4caf50; /* Color verde para éxitos */
+/* Contenedor de carga */
+.loading-container h1 {
+    font-size: 2rem;
+    color: #00796b;
 }
