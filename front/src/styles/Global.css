@@ -21,6 +21,7 @@ body {
   min-height: 79vh;
 }
 
+
 /* Loading and Error Styles */
 .loading, .error {
   text-align: center;
@@ -188,4 +189,33 @@ input, textarea {
 @keyframes shine {
   0% { background-position: -200%; }
   100% { background-position: 200%; }
+}
+
+
+.page-transition {
+  animation: pageEnter 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+@keyframes pageEnter {
+  0% {
+      opacity: 0;
+      filter: blur(25px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+  }
+}
+
+.page-transition {
+  animation: pageEnter 0.4s ease-out forwards;
+  animation-delay: 0.6s; 
+  opacity: 0;
+  transform: scale(0.9);
+  transform-style:preserve-3d;
 }

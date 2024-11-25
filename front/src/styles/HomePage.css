@@ -36,7 +36,7 @@
 .welcome-widget {
   min-width: 300px;
   max-width: 900px;
-  background: linear-gradient(135deg, #f5f08dcf, #309d24d6); /* Fondo degradado */
+  background: linear-gradient(135deg, #f5f08dcf, #135a0bd6); /* Fondo degradado */
   border-radius: 15px;
   padding: 30px 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
@@ -70,12 +70,6 @@
   display: flex;
   background-color: rgba(255, 255, 255, 0.8); /* Fondo claro */
   border-radius: 15px; /* Bordes redondeados */
-  flex-direction: column; /* Alinea elementos en columna */
-  align-items: center; /* Centra contenido */
-}
-
-.profile-widget {
-  display: flex;
   flex-direction: column; /* Alinea elementos en columna */
   align-items: center; /* Centra contenido */
 }
