@@ -1,55 +1,52 @@
 // components/pages/ProfilePage.js
 import React, { useState, useEffect } from 'react';
-import '../styles/Profile.css'; // Importa el archivo CSS para estilos
+import '../styles/Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faDollarSign } from '@fortawesome/free-solid-svg-icons'; // Íconos para usuario y correo
-import { faWallet, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons'; // Ícono para wallet
-import { useUser } from '../context/UserContext'; // Importa el hook del contexto
+import { faUser, faEnvelope, faDollarSign, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faWallet, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
+import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';  // Cambiar a useNavigate
 
 import Modal from '../components/layout/Modal';
 import AddFunds from '../components/wallet/AddFundsForm';
 import TransactionHistory from '../components/wallet/TransactionHistoryForm';
-import { getUserBalance, getTransactionHistory, addFundsToWallet } from '../utils/api'; // Asegúrate de tener estas funciones
+import { getUserBalance, getTransactionHistory, addFundsToWallet } from '../utils/api';
 
 const ProfilePage = () => {
-  const { user, loading } = useUser(); // Obtiene el usuario del contexto y el estado de carga
+  const { user, loading } = useUser();
   const [balance, setBalance] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [isAddFundsOpen, setAddFundsOpen] = useState(false);
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  const [fetchError, setFetchError] = useState(false); // Estado para manejar el error
+  const [fetchError, setFetchError] = useState(false);
+
+  const navigate = useNavigate(); // Usamos useNavigate para redirigir
 
   useEffect(() => {
-    // Depuración: Verifica si se está obteniendo el usuario correctamente
-    console.log("User from context:", user);
-
     const fetchBalance = async () => {
       try {
         if (user && user._id) {
-          console.log("Fetching balance for user ID:", user._id); // Depuración del user._id
-          const userBalance = await getUserBalance(user._id); // Pasamos el user._id
+          const userBalance = await getUserBalance(user._id);
           setBalance(userBalance);
-        } else {
-          console.error("User ID is not available or user is null.");
         }
       } catch (error) {
-        console.error("Error fetching balance:", error); // Depuración del error
-        setFetchError(true); // Si hay un error, se marca como fallo
+        console.error("Error fetching balance:", error);
+        setFetchError(true);
       }
     };
 
-    if (!loading) { // Solo intenta obtener el balance cuando no esté cargando
+    if (!loading) {
       fetchBalance();
     }
-  }, [user, loading]); // Dependencia de user y loading para evitar problemas
+  }, [user, loading]);
 
   const handleAddFunds = async (amount) => {
     try {
-      await addFundsToWallet(user._id, amount); // Usar el nuevo endpoint
+      await addFundsToWallet(user._id, amount);
       const updatedBalance = await getUserBalance(user._id);
       setBalance(updatedBalance);
     } catch (error) {
-      console.error("Error adding funds:", error); // Manejo de errores
+      console.error("Error adding funds:", error);
     }
   };
 
@@ -59,8 +56,12 @@ const ProfilePage = () => {
       setTransactions(history);
       setHistoryOpen(true);
     } catch (error) {
-      console.error("Error fetching transaction history:", error); // Solo para propósitos de depuración
+      console.error("Error fetching transaction history:", error);
     }
+  };
+
+  const handleGoToAdminPanel = () => {
+    navigate('/admin-panel'); // Usamos navigate para redirigir a la página del panel de administración
   };
 
   const historyContent = transactions.length > 0 ? (
@@ -74,7 +75,7 @@ const ProfilePage = () => {
   );
 
   if (loading) {
-    return <p>Loading profile...</p>; // Mostrar algo mientras el contexto carga
+    return <p>Loading profile...</p>;
   }
 
   if (!user) {
@@ -123,13 +124,24 @@ const ProfilePage = () => {
             <span className="money">${balance !== null ? balance : 'Loading...'}</span>
           )}
         </div>
+
+        <hr className="separator" />
+
+        <div className="profile-item">
+          <FontAwesomeIcon icon={faCog} className="wallet-icon" />
+          <span className="profile-label">Admin:</span>
+          <div className="wallet-section">
+            <div className="wallet-buttons">
+              <button className="wallet-button" onClick={handleGoToAdminPanel}>Panel</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Modal para añadir fondos */}
       <Modal isOpen={isAddFundsOpen} onClose={() => setAddFundsOpen(false)}>
         <AddFunds onClose={() => setAddFundsOpen(false)} onAddFunds={handleAddFunds} />
       </Modal>
-
     </div>
   );
 };

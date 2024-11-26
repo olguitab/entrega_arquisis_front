@@ -110,6 +110,10 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
         setWebpayData({ url: response.url, token: response.token});
         setTransactionId(response.transactionId)
         //sessionStorage.setItem('transactionId', response.transactionId);
+        localStorage.setItem('wallet', 'false');
+      }
+      else{
+        localStorage.setItem('wallet', 'true');
       }
       setShowConfirmation(true); // Muestra el componente de confirmación
     } catch(error){
@@ -190,9 +194,9 @@ const BondPurchaseForm = ({ fixture, onClose }) => {
           amount={amount}
           selectedOdd={selectedOdd}
           estimatedWinnings={estimatedWinnings}
-          onConfirm={() => navigate('/successful-purchase')} // TO DO: revisar bien el flujo de pago con wallet
+          onConfirm={() => navigate('/successful-purchase') } // TO DO: revisar bien el flujo de pago con wallet
           onCancel={() => setShowConfirmation(false)}
-        />
+        />        
       ) : showConfirmation && !wallet  ? (
         <ConfirmWebpayPurchaseForm
           fixture={fixture}

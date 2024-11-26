@@ -3,12 +3,27 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 30px;
-  background-color: #f4f4f9;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitranslúcido */
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Helvetica Neue', sans-serif;
   color: #333;
   justify-content: center;
+  animation: containerOpen 0.4s ease-out forwards;
+  
+
+}
+
+@keyframes containerOpen {
+  0% {
+      opacity: 0;
+      filter: blur(25px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+  }
 }
 
 .bet-history-page h1 {
