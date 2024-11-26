@@ -38,12 +38,15 @@
 }
 
 .fixture-item {
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column; /* Organiza los elementos en columna */
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%; /* Asegura que la altura sea consistente */
 }
 
 .fixture-item:hover {
@@ -53,8 +56,8 @@
 
 
 .fixture-details {
-    margin-bottom: 20px;
-    text-align: center;
+  margin-bottom: auto; /* Empuja el footer hacia abajo */
+  text-align: center;
 }
 
 .team-info {
@@ -97,11 +100,6 @@
     margin: 10px 0;
 }
 
-.league-info {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #34495e;
-}
 
 .odds {
     margin: 15px 0;
@@ -350,7 +348,7 @@
     scale: 1;
     padding: 25px;
     border-radius: 15px;
-    margin-top: 15px;
+    margin: 0px 0 12px 0;
     box-shadow: 0 0px 8px rgba(154, 153, 153, 0.5);
     max-height: 700px; /* Altura máxima estimada cuando está expandido */
   }
@@ -406,6 +404,7 @@
   }
   
   .filter-dropdown-button {
+    margin: 10px 0;
     background-color: #6c757d9c; /* Color más moderno y neutral */
     color: #ffffff;
     border: none;
@@ -428,3 +427,89 @@
     background-color: #13599f; /* Color más oscuro al hacer clic */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más suave al hacer clic */
   }
+
+
+  /* Grid layout for fixtures */
+.fixtures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajustable */
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* Tarjetas individuales */
+.fixture-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.7));
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.fixture-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Encabezado de la tarjeta */
+.fixture-card-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
+}
+
+
+.team-logo {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.team-logo:hover {
+  transform:perspective(100px) scale(1.05);
+}
+
+/* Cuerpo de la tarjeta */
+.fixture-card-body {
+  padding: 15px;
+  text-align: center;
+  flex: 1;
+}
+
+.fixture-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.fixture-info {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Pie de la tarjeta */
+.fixture-card-footer {
+  padding: 10px;
+  text-align: center;
+  background: rgba(0, 128, 0, 0.1);
+}
+
+
+.bet-button {
+  background-color: #5fbf83;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease, scale 0.2s ease;}
+
+.bet-button:hover {
+  background-color: #4caf70;
+  scale: 1.05;
+}
