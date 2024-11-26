@@ -11,6 +11,7 @@ import BetHistoryPage from '../pages/BetHistoryPage';
 import RecommendationsPage from '../pages/RecommendationsPage';
 // <Route path="/confirmed" element={<ConfirmedBetPage />} />
 import SuccessfulPurchasePage from '../pages/SuccessfulPurchasePage'
+import AdminPanelPage from '../pages/AdminPanelPage'
 
 
 const AppRoutes = () => {
@@ -44,6 +45,14 @@ const AppRoutes = () => {
             <RecommendationsPage/>
           </ProtectedRoute>
         } 
+      />
+      <Route
+        path="/admin-panel"
+        element={
+          <ProtectedRoute>
+            <AdminPanelPage />
+          </ProtectedRoute>
+        }
       />
     </Routes>
   );

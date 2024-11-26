@@ -7,6 +7,8 @@ import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 const ConfirmWalletPurchaseForm = ({ fixture, amount, selectedOdd, estimatedWinnings, onConfirm, onClose }) => {
   const totalAmount = amount ? amount * 1000 : 0;
   sessionStorage.setItem('wallet', true);
+  console.log('Starting wallet confirmation form');
+  console.log('Wallet:', sessionStorage.getItem('wallet'));
 
   return (
     <Modal isOpen={true} onClose={onClose}>

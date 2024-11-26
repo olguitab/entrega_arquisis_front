@@ -8,7 +8,7 @@ const SuccessfulPurchasePage = () => {
     const [transactionStatus, setTransactionStatus] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [wallet, setWallet] = useState('false');
+    const [wallet, setWallet] = useState(localStorage.getItem('wallet') || 'false');
     const [progress, setProgress] = useState(100); // Barra de progreso inicializada en 100%
     const [progressColor, setProgressColor] = useState('#e0e0e0'); // Gris por defecto
     const navigate = useNavigate(); // Para redirigir al perfil
@@ -16,7 +16,6 @@ const SuccessfulPurchasePage = () => {
     useEffect(() => {
         const tokenWs = searchParams.get('token_ws') || '';
         const transactionId = sessionStorage.getItem('transactionId');
-        setWallet(sessionStorage.getItem('wallet'));
 
         const fetchTransactionStatus = async () => {
             try {
@@ -29,9 +28,16 @@ const SuccessfulPurchasePage = () => {
             }
         };
 
-        if (tokenWs && transactionId) {
+        console.log('tokenWs:', tokenWs);
+        console.log('transactionId:', transactionId);
+        console.log('wallet:', wallet);
+        
+        if (wallet === 'false') {	
             fetchTransactionStatus();
-        } else if (wallet) {
+        } else if (wallet === 'true') {
+            console.log('Starting wallet confirmation');
+            console.log('Wallet:', wallet);
+            setTransactionStatus("AUTHORIZED");
             setLoading(false);
         } else {
             setError("Faltan parámetros necesarios.");
@@ -44,6 +50,8 @@ const SuccessfulPurchasePage = () => {
             setProgressColor('#4caf50'); // Verde para éxito
         } else if (transactionStatus === "CANCELED") {
             setProgressColor('#d56167'); // Rojo para cancelado
+        } else if (transactionStatus === "PENDING") {
+            setProgressColor('#f9a825'); // Amarillo para pendiente
         } else {
             setProgressColor('#9e9e9e'); // Gris para otros casos
         }
@@ -93,8 +101,8 @@ const SuccessfulPurchasePage = () => {
                     </div>
                 ) : transactionStatus === "PENDING" ? (
                     <div className="pending">
-                        <h1>Transacción Pendiente</h1>
-                        <p>Estamos procesando tu compra. Por favor espera...</p>
+                        <h1>Pago Pendiente</h1>
+                        <p>Lo sentimos, algo salió mal con tu compra y no pudimos comprobar tu pago. Por favor, intenta nuevamente...</p>
                     </div>
                 ) : transactionStatus === "FAILED" ? (
                     <div className="failed">
