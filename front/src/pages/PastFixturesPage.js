@@ -20,7 +20,7 @@ const FixturesPage = () => {
   const [localVisitFilter, setLocalVisitFilter] = useState('');
   const [oddsAvailableFilter, setOddsAvailableFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   useEffect(() => {
     const loadFixtures = async () => {
@@ -195,11 +195,10 @@ const FixturesPage = () => {
                 <label className="filter-label">
                   Items per Page:
                   <select value={itemsPerPage} onChange={handleItemsPerPageChange} className="select">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
+                  <option value="6">6</option>
+                  <option value="12">12</option>
+                  <option value="18">18</option>
+                  <option value="24">24</option>
                   </select>
                 </label>
               </div>
@@ -208,29 +207,22 @@ const FixturesPage = () => {
           </div>
       </div>
 
-      <ul>
-      {currentFixtures.map((fixture) => (
-          <li key={fixture.fixture.id} className="fixture-item">
-            <div className="fixture-details">
-              <div className="team-info">
-                <div className="team home-team">
-                  <img src={fixture.teams.home.logo} alt={fixture.teams.home.name} className="team-logo" />
-                  <strong>{fixture.teams.home.name}</strong>
-                </div>
-                <div className="vs">vs</div>
-                <div className="team away-team">
-                  <img src={fixture.teams.away.logo} alt={fixture.teams.away.name} className="team-logo" />
-                  <strong>{fixture.teams.away.name}</strong>
-                </div>
-              </div>
+      <div className="fixtures-grid">
+        {currentFixtures.map((fixture) => (
+          <div key={fixture.fixture.id} className="fixture-card" onClick={() => handleShowModal(fixture)}>
+            <div className="fixture-card-header-finished">
+              <img src={fixture.teams.home.logo} alt={fixture.teams.home.name} className="team-logo" />
+              <div className="vs">vs</div>
+              <img src={fixture.teams.away.logo} alt={fixture.teams.away.name} className="team-logo" />
+            </div>
+            <div className="fixture-card-body">
+              <h3 className="fixture-title">{fixture.teams.home.name} vs {fixture.teams.away.name}</h3>
               <div className="fixture-time">
-                Date: {new Date(fixture.fixture.date).toLocaleString()}
+                Played on: {new Date(fixture.fixture.date).toLocaleString()}
               </div>
+              
               <div className="league-info">
                 League: {fixture.league.name}, Round: {fixture.league.round}
-              </div>
-              <div className="status">
-                Status: {fixture.fixture.status.long}
               </div>
               <div className="odds">
                 {fixture.odds && fixture.odds[0] && fixture.odds[0].values.length > 0 ? (
@@ -242,24 +234,27 @@ const FixturesPage = () => {
                 ) : (
                   <div className="failed-text">No odds available</div>
                 )}
-              </div>
+            </div>
+
+            </div>
+
+            
+            <div className="fixture-card-footer-finished">
               <div className="result">
-                <div className="separator"></div>
-                Goals:
-                <div className="scores"> 
-                  <div className="score">
-                    {fixture.goals.home}
-                  </div>
-                  - 
-                  <div className="score">
-                    {fixture.goals.away}
+                  <div className="scores"> 
+                    <div className="score">
+                      {fixture.goals.home}
+                    </div>
+                    - 
+                    <div className="score">
+                      {fixture.goals.away}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <div className="pagination">
         {currentPage > 1 && (

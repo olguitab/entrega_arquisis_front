@@ -159,6 +159,17 @@ export const getJobResults = async (jobId) => {
   }
 };
 
+const offerBond = async (bondId, quantity) => {
+  try {
+    await purchaseBond({ bondId, quantity });
+    alert('Bond offered successfully!');
+  } catch (error) {
+    console.error('Error offering bond:', error);
+    alert('Error offering bond');
+  }
+};
+
+
 
 
 
