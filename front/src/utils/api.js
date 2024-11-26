@@ -2,9 +2,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', 
-  // baseURL: 'http://localhost:3001',
-  withCredentials: true
+  // baseURL: 'https://f4lua74a2m.execute-api.us-east-1.amazonaws.com', 
+  baseURL: 'http://localhost:3001',
+  // withCredentials: true
 });
 export default api;
 
@@ -158,6 +158,17 @@ export const getJobResults = async (jobId) => {
     throw new Error('Error fetching job results: ' + error.message);
   }
 };
+
+const offerBond = async (bondId, quantity) => {
+  try {
+    await purchaseBond({ bondId, quantity });
+    alert('Bond offered successfully!');
+  } catch (error) {
+    console.error('Error offering bond:', error);
+    alert('Error offering bond');
+  }
+};
+
 
 
 
