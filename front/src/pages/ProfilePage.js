@@ -1,4 +1,3 @@
-// components/pages/ProfilePage.js
 import React, { useState, useEffect } from 'react';
 import '../styles/Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,16 +46,6 @@ const ProfilePage = () => {
       setBalance(updatedBalance);
     } catch (error) {
       console.error("Error adding funds:", error);
-    }
-  };
-
-  const handleViewHistory = async () => {
-    try {
-      const history = await getTransactionHistory();
-      setTransactions(history);
-      setHistoryOpen(true);
-    } catch (error) {
-      console.error("Error fetching transaction history:", error);
     }
   };
 
@@ -125,17 +114,22 @@ const ProfilePage = () => {
           )}
         </div>
 
-        <hr className="separator" />
-
-        <div className="profile-item">
-          <FontAwesomeIcon icon={faCog} className="wallet-icon" />
-          <span className="profile-label">Admin:</span>
-          <div className="wallet-section">
-            <div className="wallet-buttons">
-              <button className="wallet-button" onClick={handleGoToAdminPanel}>Panel</button>
+        {/* Mostrar sección de administración solo si el username es admin@uc.cl */}
+        {user.email === 'admin@uc.cl' && (
+          <div>
+            <hr className="separator" />
+            <div className="profile-item">
+              <FontAwesomeIcon icon={faCog} className="wallet-icon" />
+              <span className="profile-label">Admin:</span>
+              <div className="wallet-section">
+                <div className="wallet-buttons">
+                  <button className="wallet-button" onClick={handleGoToAdminPanel}>Panel</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+
+        )}
       </div>
 
       {/* Modal para añadir fondos */}
