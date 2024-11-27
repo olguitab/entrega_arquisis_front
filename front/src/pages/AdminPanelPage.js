@@ -175,15 +175,17 @@ const AdminPanelPage = () => {
 
   return (
     <div className="fixtures-page">
-      <h1>Admin Panel</h1>
+    <h1>Admin Panel</h1>
 
+    <div className="button-container">
       <button className="button" onClick={() => setShowFixtures(!showFixtures)}>
         {showFixtures ? 'Hide Fixtures' : 'Show Fixtures'}
       </button>
 
       <button className="button" onClick={() => setShowHistory(!showHistory)}>
-        {showFixtures ? 'Hide History' : 'Show History'}
+        {showHistory ? 'Hide History' : 'Show History'}
       </button>
+    </div>
 
       {showFixtures && (
       <div>
@@ -340,9 +342,8 @@ const AdminPanelPage = () => {
         </Modal>
       </div>
       )}
-      {showFixtures && (
+      {showHistory && (
         <div className="bet-history-page">
-        <div className='gradient-h1'>My Bet History</div>
         <ul className="bet-list">
           {bets.map((bet, index) => (
             <li key={index} className="fixture-item">
